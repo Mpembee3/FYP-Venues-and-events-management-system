@@ -18,6 +18,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/see_venues', function () {
+    return view('venue');
+});
+
+Route::get('/see_dashboard', function () {
+    return view('dash');
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
