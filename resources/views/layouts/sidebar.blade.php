@@ -6,7 +6,7 @@
 
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo justify-content-center align-items-center flex-column">
-            <a href="index.html" class="app-brand-link">
+            <a href="{{ url('see_dashboard') }}" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <img src="../assets/img/favicon/favicon.ico" alt class="w-px-50 h-auto rounded-circle" />
               </span>
@@ -39,11 +39,29 @@
 
             <!-- Reservation requests (show both accepted, rejected and pending) -->
             <li class="menu-item">
-              <a href=" " class="menu-link ">
+              <a href="{{ url('see_reservations') }}" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
                 <div data-i18n="Account Settings">Reservation requests</div>
               </a>              
             </li>
+            <!-- Events(This show events status(ongoing, upcoming)) -->
+            <li class="menu-item">
+              <a href="{{ url('see_events') }}" class="menu-link ">
+                <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="Account Settings">Events</div>
+              </a>              
+            </li> 
+
+             <!-- Payments(This show payments status(pending, paid)) -->
+             <li class="menu-item">
+              <a href="{{ url('see_payments') }}" class="menu-link ">
+              <i class="menu-icon tf-icons bx bx-wallet"></i>
+
+
+                <div data-i18n="Account Settings">Payments</div>
+              </a>              
+            </li>               
+
             <!-- Other stuffs can be added here -->
             <li class="menu-item">
               <a href=" " class="menu-link menu-toggle">

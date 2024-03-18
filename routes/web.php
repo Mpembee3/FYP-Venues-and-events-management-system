@@ -26,6 +26,28 @@ Route::get('/see_dashboard', function () {
     return view('dash');
 });
 
+Route::get('/see_reservations', function () {
+    return view('reservations');
+});
+
+Route::get('/see_events', function () {
+    return view('events');
+});
+
+Route::get('/see_venue_register', function () {
+    return view('venue_register');
+});
+
+Route::get('/see_payments', function () {
+    return view('payments');
+});
+
+Route::get('/see_venue_profile', function () {
+    return view('venue_profile');
+});
+
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
