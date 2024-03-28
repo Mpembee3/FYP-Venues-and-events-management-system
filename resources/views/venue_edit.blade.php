@@ -7,7 +7,7 @@
           <!-- Content -->
 
           <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="fw-bold py-3 mb-4">Venue Registration</h4>
+            <h4 class="fw-bold py-3 mb-4">Venue Edit</h4>
             @if(session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
@@ -23,19 +23,34 @@
                     <h5 class="mb-0">Venue details</h5>                    
                   </div>
                   <div class="card-body">
-                    <form action="{{ route('create_venue') }}" method="post">
-                      @csrf
+                    <form action="{{ route('see_venue_update', $venue->id) }}" method="post">
+                    @method('PUT')  
+                    @csrf                    
+                                                               
                       <div class="mb-3">
                         <label class="form-label" for="basic-default-fullname">Venue name</label>
-                        <input type="text" name="name" class="form-control" id="basic-default-fullname" placeholder="" />
+                        <input type="text" 
+                            name="name" 
+                            class="form-control" 
+                            value = "{{ $venue->name }}"
+                            id="basic-default-fullname" 
+                             />
                       </div>
                       <div class="mb-3">
                         <label class="form-label" for="basic-default-fullname">Events</label>
-                        <input type="text" name="event" class="form-control" id="basic-default-fullname" placeholder="Enter all allowed activities" />
+                        <input type="text" 
+                            name="event" 
+                            class="form-control" 
+                            id="basic-default-fullname" 
+                            value = "{{ $venue->event }}" />
                       </div>
                       <div class="mb-3">
                         <label class="form-label" for="basic-default-company">Capacity</label>
-                        <input type="number" name="capacity" class="form-control" id="basic-default-company" placeholder="Enter accomodating capacity" />
+                        <input type="number" 
+                            name="capacity" 
+                            class="form-control" 
+                            id="basic-default-company" 
+                            value = "{{ $venue->capacity }}" />
                       </div>
                       <div class="mb-3">
                         <label class="form-label" for="basic-default-price">Price (Tshs)</label>
@@ -45,7 +60,7 @@
                             name="price"
                             id="basic-default-price"
                             class="form-control"
-                            placeholder="Enter price in Tshs"
+                            value = "{{ $venue->Price }}"
                             aria-label="Enter price in Tshs"
                             aria-describedby="basic-default-price2"
                             step="1"
@@ -62,7 +77,7 @@
                             name="latitude"
                             id="basic-default-latitude"
                             class="form-control"
-                            placeholder="Latitude"
+                            value = "{{ $venue->latitude }}"
                             aria-label="Latitude"
                           />
                           <input
@@ -70,7 +85,7 @@
                             name="longitude"
                             id="basic-default-longitude"
                             class="form-control"
-                            placeholder="Longitude"
+                            value = "{{ $venue->longitude }}"
                             aria-label="Longitude"
                           />
                         </div>
@@ -83,6 +98,7 @@
                           name="image"
                           class="form-control"
                           id="inputGroupFile04"
+                          value = "{{ $venue->image }}"
                           aria-describedby="inputGroupFileAddon04"
                           aria-label="Upload"
                         />
@@ -95,10 +111,10 @@
                           id="basic-default-message"
                           name="description"
                           class="form-control"
-                          placeholder="Activities, resources etc"
+                          value = "{{ $venue->description }}"
                         ></textarea>
                       </div>
-                      <button type="submit" class="btn btn-primary">Register</button>
+                      <button type="submit" class="btn btn-primary">Update</button>
                     </form>
                   </div>
                 </div>

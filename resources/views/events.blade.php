@@ -16,6 +16,7 @@
                     <tr>
                       <th>S/N</th>                      
                       <th>Name</th>
+                      <th>Event</th>
                       <th>email</th>                      
                       <th>Contact</th>                     
                       <th>Status</th>
@@ -28,6 +29,8 @@
                       <td>
                         <i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Albert Cook</strong>
                       </td>
+                      <td>Venue 4</td>  
+                      <td>Seminar</td>
                       <td>albertcook@gmail.com</td>  
                       <td>+255 123 456 789</td>                   
                       <td><span class="badge bg-label-success me-1">Ongoing</span></td>
@@ -41,6 +44,8 @@
                     <tr>
                       <td>2</td>
                       <td><i class="fab fa-react fa-lg text-info me-3"></i> <strong>Barry Hunter</strong></td>
+                      <td>Venue 3</td>  
+                      <td>Workshop</td>
                       <td>barryhunter@gmail.com</td>
                       <td>+255 123 456 789</td>    
                       <td><span class="badge bg-label-success me-1">Approved</span></td>
@@ -55,6 +60,8 @@
                     <tr>
                       <td>3</td>
                       <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <strong>Trevor Baker</strong></td>
+                      <td>Venue 2</td>  
+                      <td>Meeting</td>
                       <td>trevorbaker@gmail.com</td>
                       <td>+255 123 456 789</td>    
                       <td><span class="badge bg-label-warning me-1">Pending</span></td>
@@ -70,6 +77,8 @@
                       <td>
                         <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>Jerry Milton</strong>
                       </td>
+                      <td>Venue 1</td>  
+                      <td>Worship</td>
                       <td>jerrymilton@gmail.com</td>  
                       <td>+255 123 456 789</td>                        
                       <td><span class="badge bg-label-warning me-1">Pending</span></td>

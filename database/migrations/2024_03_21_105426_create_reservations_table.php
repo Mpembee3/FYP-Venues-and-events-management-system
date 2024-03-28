@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('venues', function (Blueprint $table) {
+        Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('venue');
             $table->string('event');
-            $table->integer('capacity');
-            $table->integer('Price');
-            $table->string("image")->nullable();
-            $table->decimal('latitude', total: 12, places: 8);
-            $table->decimal('longitude', total: 12, places: 8);
-            $table->text('Other_description');
+            $table->string('email');
+            $table->string('contact');
+            $table->string('status');
+            $table->string('action');
             $table->timestamps();
+
         });
     }
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('venues');
+        Schema::dropIfExists('reservations');
     }
 };

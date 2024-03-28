@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\venueController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,13 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//.................VENUE MODULE ROUTES STARTS HERE................
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/see_venues', function () {
-    return view('venue');
-});
+Route::get('/see_venues', [venueController::class, 'index'])->name('index_venues');
 
 Route::get('/see_dashboard', function () {
     return view('dash');
@@ -42,9 +42,18 @@ Route::get('/see_payments', function () {
     return view('payments');
 });
 
-Route::get('/see_venue_profile', function () {
-    return view('venue_profile');
-});
+Route::get('/see_venue_edit/{id}', [venueController::class, 'edit'])->name('see_venue_edit');
+
+Route::put('/see_venue_update/{id}', [venueController::class, 'update'])->name('see_venue_update');
+
+Route::get('/see_venue_profile/{id}', [venueController::class, 'profile'])->name('see_venue_profile');
+
+Route::post('/create_venue', [venueController::class, 'create'])->name('create_venue');
+
+Route::delete('/see_venue_delete/{id}', [venueController::class, 'delete'])->name('see_venue_delete');
+
+
+//.................VENUE MODULE ROUTES ENDS HERE................
 
 
 
