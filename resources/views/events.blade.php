@@ -1,4 +1,5 @@
 @extends('layouts.sidebar')
+@section('title', 'Events Dashboard')
 @section('content2')
 
           <!-- Content wrapper -->

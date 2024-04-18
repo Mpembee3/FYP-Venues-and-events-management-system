@@ -18,9 +18,21 @@ class venueController extends Controller
         $venue->longitude = $request->longitude;
         $venue->Other_description = $request->description;
         $venue->Price = $request->price;
-     // $venue->image = $request->image;
+       
+
+        //method to handle and display images      
+        // Handle image upload
+        // Check if a file is uploaded
+        if ($request->hasFile('image')) {
+            // Store the image in the public storage directory
+            $imagePath = $request->file('image')->store('public/images');
+            // Get the public URL of the stored image
+            $venue->image = str_replace('public', 'storage', $imagePath);
+        }
+
         $venue->save();
-        return redirect()->back()->with('success', 'Venue added successfully!');
+
+        return redirect()->route('index_venues')->with('success', 'Venue added successfully!');
     }
 
 
@@ -33,8 +45,9 @@ class venueController extends Controller
             abort(404);
         }
 
-        return view('venue_edit', compact('venue'));
+        return view('venues.venue_edit', compact('venue'));
     }
+
 
     public function update(Request $request, $id)
     {
@@ -51,7 +64,16 @@ class venueController extends Controller
         $venue->longitude = $request->longitude;
         $venue->Other_description = $request->description;
         $venue->Price = $request->price;
-        // $venue->image = $request->image;
+        
+        
+        //image handling        
+        if ($request->hasFile('image')) {
+            // Store the image in the public storage directory
+            $imagePath = $request->file('image')->store('public/images');
+            // Get the public URL of the stored image
+            $venue->image = str_replace('public', 'storage', $imagePath);
+        }
+
         $venue->save();
 
         return redirect()->route('index_venues')->with('success', 'Venue updated successfully!');
@@ -76,16 +98,17 @@ class venueController extends Controller
             abort(404);
         }
 
-        return view('venue_profile', compact('venue'));
+        return view('venues.venue_profile', compact('venue'));
     }
 
   
     //method to display all registered venue
     public function index(){
         $data = Venue::all();
-        return view('venue', ["data"=>$data]);
+        return view('venues.venue', ["data"=>$data]);
     }
 
+    
     
 
 

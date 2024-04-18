@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\venueController;
+use App\Http\Controllers\reservationController;
+use App\Http\Controllers\paymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,27 +22,27 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/see_venues', [venueController::class, 'index'])->name('index_venues');
+Route::get('/see_venue', [venueController::class, 'index'])->name('index_venues');
 
 Route::get('/see_dashboard', function () {
     return view('dash');
 });
 
-Route::get('/see_reservations', function () {
-    return view('reservations');
-});
+// Route::get('/see_reservations', function () {
+//     return view('reservations');
+// });
 
 Route::get('/see_events', function () {
     return view('events');
 });
 
 Route::get('/see_venue_register', function () {
-    return view('venue_register');
+    return view('venues.venue_register');
 });
 
-Route::get('/see_payments', function () {
-    return view('payments');
-});
+// Route::get('/see_payments', function () {
+//     return view('payments');
+// });
 
 Route::get('/see_venue_edit/{id}', [venueController::class, 'edit'])->name('see_venue_edit');
 
@@ -54,6 +56,31 @@ Route::delete('/see_venue_delete/{id}', [venueController::class, 'delete'])->nam
 
 
 //.................VENUE MODULE ROUTES ENDS HERE................
+
+
+
+//.................RESERVATIONS MODULE ROUTES STARTS HERE.............
+
+
+Route::get('/see_reservations', [reservationController::class, 'requests'])->name('see_reservations');
+
+
+//.................RESERVATIONS MODULE ROUTES ENDS HERE.............
+
+
+
+
+//.................PAYMENTS MODULE ROUTES STARTS HERE.............
+
+Route::get('/see_payments', [paymentController::class, 'status'])->name('see_payments');
+
+
+
+//.................PAYMENTS MODULE ROUTES ENDS HERE.............
+
+
+
+
 
 
 

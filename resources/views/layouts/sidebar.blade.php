@@ -22,7 +22,7 @@
 
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
-            <li class="menu-item active">
+            <li class="menu-item {{ Request::is('see_dashboard') ? 'active' : '' }}">
               <a href="{{ url('see_dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
@@ -30,22 +30,22 @@
             </li>
 
             <!-- Venues (add venue page at href)-->
-            <li class="menu-item">
-              <a href="{{ url('see_venues') }}" class="menu-link">
+            <li class="menu-item {{ Request::is('see_venue*') ? 'active' : '' }}">
+              <a href="{{ url('see_venue') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Layouts">Venues</div>
               </a>             
             </li>
 
             <!-- Reservation requests (show both accepted, rejected and pending) -->
-            <li class="menu-item">
+            <li class="menu-item {{ Request::is('see_reservations') ? 'active' : '' }}">
               <a href="{{ url('see_reservations') }}" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
                 <div data-i18n="Account Settings">Reservation requests</div>
               </a>              
             </li>
             <!-- Events(This show events status(ongoing, upcoming)) -->
-            <li class="menu-item">
+            <li class="menu-item {{ Request::is('see_events') ? 'active' : '' }}">
               <a href="{{ url('see_events') }}" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Account Settings">Events</div>
@@ -53,7 +53,7 @@
             </li> 
 
              <!-- Payments(This show payments status(pending, paid)) -->
-             <li class="menu-item">
+             <li class="menu-item {{ Request::is('see_payments') ? 'active' : '' }}">
               <a href="{{ url('see_payments') }}" class="menu-link ">
               <i class="menu-icon tf-icons bx bx-wallet"></i>
 

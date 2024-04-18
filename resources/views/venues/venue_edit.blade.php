@@ -1,4 +1,5 @@
 @extends('layouts.sidebar')
+@section('title', 'Venue Edit')
 @section('content2')
 
         <!-- venue registration form credintials) -->
@@ -23,7 +24,7 @@
                     <h5 class="mb-0">Venue details</h5>                    
                   </div>
                   <div class="card-body">
-                    <form action="{{ route('see_venue_update', $venue->id) }}" method="post">
+                    <form action="{{ route('see_venue_update', $venue->id) }}" method="post" enctype="multipart/form-data">
                     @method('PUT')  
                     @csrf                    
                                                                
@@ -90,21 +91,21 @@
                           />
                         </div>
                       </div>
-                    <!-- <div class="mb-3">
+                    <div class="mb-3">
                       <label class="form-label" for="basic-default-image">Venue image</label>
                       <div class="input-group">
                         <input
                           type="file"
                           name="image"
                           class="form-control"
-                          id="inputGroupFile04"
+                          id="basic-default-image"
                           value = "{{ $venue->image }}"
                           aria-describedby="inputGroupFileAddon04"
                           aria-label="Upload"
                         />
-                        <button class="btn btn-outline-primary" type="button" id="inputGroupFileAddon04">Upload</button>
+                       
                       </div>
-                    </div> -->
+                    </div> 
                       <div class="mb-3">
                         <label class="form-label" for="basic-default-message">Other descriptions</label>
                         <textarea

@@ -1,4 +1,5 @@
 @extends('layouts.sidebar')
+@section('title', 'Venue Registration')
 @section('content2')
 
         <!-- venue registration form credintials) -->
@@ -23,16 +24,21 @@
                     <h5 class="mb-0">Venue details</h5>                    
                   </div>
                   <div class="card-body">
-                    <form action="{{ route('create_venue') }}" method="post">
+                    <form action="{{ route('create_venue') }}" method="post" enctype="multipart/form-data">
                       @csrf
                       <div class="mb-3">
                         <label class="form-label" for="basic-default-fullname">Venue name</label>
-                        <input type="text" name="name" class="form-control" id="basic-default-fullname" placeholder="" />
+                        <input type="text" name="name" class="form-control" id="basic-default-fullname" placeholder="Enter venue name" />
                       </div>
+
+                      <!-- events selection -->
                       <div class="mb-3">
                         <label class="form-label" for="basic-default-fullname">Events</label>
                         <input type="text" name="event" class="form-control" id="basic-default-fullname" placeholder="Enter all allowed activities" />
                       </div>
+
+                    <!-- events selection, i can modify later-->
+
                       <div class="mb-3">
                         <label class="form-label" for="basic-default-company">Capacity</label>
                         <input type="number" name="capacity" class="form-control" id="basic-default-company" placeholder="Enter accomodating capacity" />
@@ -75,20 +81,20 @@
                           />
                         </div>
                       </div>
-                    <!-- <div class="mb-3">
+                    <div class="mb-3">
                       <label class="form-label" for="basic-default-image">Venue image</label>
                       <div class="input-group">
                         <input
                           type="file"
                           name="image"
                           class="form-control"
-                          id="inputGroupFile04"
+                          id="basic-default-image"
                           aria-describedby="inputGroupFileAddon04"
                           aria-label="Upload"
                         />
-                        <button class="btn btn-outline-primary" type="button" id="inputGroupFileAddon04">Upload</button>
+                        
                       </div>
-                    </div> -->
+                    </div>
                       <div class="mb-3">
                         <label class="form-label" for="basic-default-message">Other descriptions</label>
                         <textarea

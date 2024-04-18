@@ -1,4 +1,5 @@
 @extends('layouts.sidebar')
+@section('title', 'Admin dashboard')
 @section('content2')
 <!-- Layout wrapper -->
 

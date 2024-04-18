@@ -1,4 +1,5 @@
 @extends('layouts.sidebar')
+@section('title', 'Payments')
 @section('content2')
 
          <!-- Content wrapper -->
@@ -19,73 +20,29 @@
                       <th>Venue</th>
                       <th>Event</th>
                       <th>email</th>                      
-                      <th>Contact</th>  
-                      <th>Amount(Tshs)</th>                   
-                      <th>Status</th>
-                      <th>Control number</th>
-                      
+                      <th>Contact</th> 
+                      <th>Control number</th> 
+                      <th>Amount (Tshs)</th>              
+                      <th>Status</th>                     
                     </tr>
                   </thead>
+                  @foreach($data as $payment)
                   <tbody>
                     <tr>
-                      <td>1</td>
+                      <td>{{$payment->id}}</td>
                       <td>
-                        <i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Albert Cook</strong>
+                        <i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{$payment->name}}</strong>
                       </td>
-                      <td>Venue 4</td>  
-                      <td>Seminar</td>
-                      <td>albertcook@gmail.com</td>  
-                      <td>+255 123 456 789</td>  
-                      <td>1000000</td>                   
+                      <td>{{$payment->venue}}</td>  
+                      <td>{{$payment->event}}</td>
+                      <td>{{$payment->email}}</td>  
+                      <td>{{$payment->contact}}</td>
+                      <td>{{$payment->control_number}}</td>
+                      <td>{{$payment->amount}}</td>
                       <td><span class="badge bg-label-success me-1">Paid</span></td>
-                      <td>
-                        99xxxxxxxxxxxxxxxxx
-                      </td>
-                    </tr>                    
-                    <tr>
-                      <td>2</td>
-                      <td><i class="fab fa-react fa-lg text-info me-3"></i> <strong>Barry Hunter</strong></td>
-                      <td>Venue 3</td>  
-                      <td>Workshop</td>
-                      <td>barryhunter@gmail.com</td>
-                      <td>+255 123 456 789</td> 
-                      <td>1000000</td>     
-                      <td><span class="badge bg-label-success me-1">Paid</span></td>
-                      <td>                        
-                        99xxxxxxxxxxxxxxxxx                
-
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <strong>Trevor Baker</strong></td>
-                      <td>Venue 2</td>  
-                      <td>Meeting</td>
-                      <td>trevorbaker@gmail.com</td>
-                      <td>+255 123 456 789</td>   
-                      <td>1000000</td> 
-                      <td><span class="badge bg-label-warning me-1">Pending</span></td>
-                      <td>
-                        99xxxxxxxxxxxxxxxxx
-                         
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>
-                        <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>Jerry Milton</strong>
-                      </td>
-                      <td>Venue 1</td>  
-                      <td>Worship</td>
-                      <td>jerrymilton@gmail.com</td>  
-                      <td>+255 123 456 789</td>    
-                      <td>1000000</td>                    
-                      <td><span class="badge bg-label-warning me-1">Pending</span></td>
-                      <td>
-                        99xxxxxxxxxxxxxxxxx
-                      </td>
-                    </tr>
+                    </tr>                  
                   </tbody>
+                  @endforeach
                 </table>
               </div>
             </div>

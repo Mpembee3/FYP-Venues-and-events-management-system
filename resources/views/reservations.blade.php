@@ -1,4 +1,5 @@
 @extends('layouts.sidebar')
+@section('title', 'Reservation requests')
 @section('content2')
 
           <!-- Content wrapper -->
@@ -8,6 +9,7 @@
           
           <!-- Content (table with requests and actions) -->
            <!-- Bordered Table -->
+          
            <div class="card">     
             <div class="card-body">
               <div class="table-responsive text-nowrap">
@@ -24,16 +26,17 @@
                       <th>Actions</th>
                     </tr>
                   </thead>
+                  @foreach ($data as $reservation)
                   <tbody>
                     <tr>
-                      <td>1</td>
+                      <td>{{$reservation->id}}</td>
                       <td>
-                        <i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Albert Cook</strong>
+                        <i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{$reservation->name}}</strong>
                       </td>
-                      <td>Venue 4</td>  
-                      <td>Seminar</td>  
-                      <td>albertcook@gmail.com</td>  
-                      <td>+255 123 456 789</td>                   
+                      <td>{{$reservation->venue}}</td>  
+                      <td>{{$reservation->event}}</td>  
+                      <td>{{$reservation->email}}</td>  
+                      <td>{{$reservation->contact}}</td>                   
                       <td><span class="badge bg-label-success me-1">Approved</span></td>
                       <td>
                         <div class="btn-group" role="group" aria-label="Button group">
@@ -49,77 +52,10 @@
                         </div>  
                       </td>
                     </tr>                    
-                    <tr>
-                      <td>2</td>
-                      <td><i class="fab fa-react fa-lg text-info me-3"></i> <strong>Barry Hunter</strong></td>
-                      <td>Venue 3</td>  
-                      <td>Workshop</td>  
-                      <td>barryhunter@gmail.com</td>
-                      <td>+255 123 456 789</td>    
-                      <td><span class="badge bg-label-success me-1">Approved</span></td>
-                      <td>                        
-                          <div class="btn-group" role="group" aria-label="Button group">
-                            <button type="button" class="btn btn-success">
-                              <i class="bx bx-check me-1"></i> Approve
-                            </button>
-                            <button type="button" class="btn btn-primary">
-                              <i class="bx bx-check me-1"></i> Accept
-                            </button>
-                            <button type="button" class="btn btn-danger">
-                              <i class="bx bx-x-circle me-1"></i> Reject
-                            </button>
-                          </div>                   
-
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <strong>Trevor Baker</strong></td>
-                      <td>Venue 2</td>  
-                      <td>Meeting</td>  
-                      <td>trevorbaker@gmail.com</td>
-                      <td>+255 123 456 789</td>    
-                      <td><span class="badge bg-label-danger me-1">Rejected</span></td>
-                      <td>
-                        <div class="btn-group" role="group" aria-label="Button group">
-                          <button type="button" class="btn btn-success">
-                            <i class="bx bx-check me-1"></i> Approve
-                          </button>
-                          <button type="button" class="btn btn-primary">
-                            <i class="bx bx-check me-1"></i> Accept
-                          </button>
-                          <button type="button" class="btn btn-danger">
-                            <i class="bx bx-x-circle me-1"></i> Reject
-                          </button>
-                        </div>  
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>
-                        <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>Jerry Milton</strong>
-                      </td>
-                      <td>Venue 1</td>  
-                      <td>Worship</td>  
-                      <td>jerrymilton@gmail.com</td>  
-                      <td>+255 123 456 789</td>                        
-                      <td><span class="badge bg-label-warning me-1">Pending</span></td>
-                      <td>
-                        <div class="btn-group" role="group" aria-label="Button group">
-                          <button type="button" class="btn btn-success">
-                            <i class="bx bx-check me-1"></i> Approve
-                          </button>
-                          <button type="button" class="btn btn-primary">
-                            <i class="bx bx-check me-1"></i> Accept
-                          </button>
-                          <button type="button" class="btn btn-danger">
-                            <i class="bx bx-x-circle me-1"></i> Reject
-                          </button>
-                        </div>  
-                      </td>
-                    </tr>
+                    <tr>                                          
                   </tbody>
-                </table>
+                  @endforeach
+                </table>                
               </div>
             </div>
           </div>
