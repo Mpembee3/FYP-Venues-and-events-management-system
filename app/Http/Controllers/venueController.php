@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Venue;
+use Carbon\Carbon;
 
 class venueController extends Controller
 {
-
+    //ADMIN PART
     //method to register venue
     public function create(Request $request){
         $venue = new Venue();
@@ -109,14 +110,66 @@ class venueController extends Controller
     }
 
     
+
+
+
+    //USER PART
     
+    //method to display venue profile to user
+    public function view($id){
+        $venue = Venue::findorFail($id);
+
+        if (!$venue) {
+            abort(404);
+        }
+
+        return view('venue_view', compact('venue'));
+    }
+
+
+        //method to display all registered venue
+        public function explorer(Request $request)
+        {
+            $query = Venue::query();
+            if ($request->filled('capacity')) {
+                $query->where('capacity', '>=', $request->capacity);
+            }
+        
+            if ($request->filled('event')) {
+                $query->where('event', $request->event);
+            }
+        
+            $venues = $query->get();
+        
+            // If neither capacity nor event is filled, display all venues
+            if (!$request->filled('capacity') && !$request->filled('event')) {
+                $venues = Venue::all();
+            }
+        
+            return view('venue_explorer', compact('venues'));       
+            
+        }
+
+
+       // Method to check venue availability
+        
 
 
 
-
-
-    // public function update(Request $request){
-    //     $venue->update($request->all());
-    //     return redirect()->back()->with('success', 'Venue updated successfully!');
-    // }
+       public function checkAvailability(Request $request, $id)
+       {
+           $venue = Venue::findOrFail($id);
+           $date = request()->query('date');
+           $start_time = $request->input('start_time');
+           $end_time = $request->input('end_time');
+       
+           if (!$venue->isAvailable($date, $start_time, $end_time)) {
+            $availabilityMessage = 'Venue is not available for the selected date and time.';
+            return view('venue_view', compact('venue', 'availabilityMessage', 'date', 'start_time', 'end_time'));
+        }
+    
+        $availabilityMessage = 'Venue is available for the selected date and time.';
+        return view('venue_view', compact('venue', 'availabilityMessage', 'date', 'start_time', 'end_time'));
+    }
+        
 }

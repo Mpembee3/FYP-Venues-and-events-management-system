@@ -13,16 +13,26 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('venue');
-            $table->string('event');
-            $table->string('email');
-            $table->string('contact');
-            $table->string('status');
-            $table->string('action');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('venue_id')->constrained()->onDelete('cascade');
+            $table->string('event_id');
+            $table->date('date');
+            $table->time('start_time');
+            $table->time('end_time');
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();
+            });
 
-        });
+            Schema::table('reservations', function (Blueprint $table) {
+                $table->enum('admin_approval', ['pending', 'approved', 'rejected'])->default('pending');
+                $table->timestamp('admin_approved_at')->nullable();
+                $table->enum('dvc_approval', ['pending', 'approved', 'rejected'])->default('pending');
+                $table->timestamp('dvc_approved_at')->nullable();
+                $table->enum('pro_approval', ['pending', 'approved', 'rejected'])->default('pending');
+                $table->timestamp('pro_approved_at')->nullable();
+            });
+
+
     }
 
     /**

@@ -1,5 +1,5 @@
 @extends('layouts.sidebar')
-@section('title', 'Profile')
+@section('title', 'Admin Profile')
 @section('content2')
 
 
@@ -42,7 +42,7 @@
                 @method('patch')
 
               <div class="card mb-4">
-                <h5 class="card-header">Profile Details ({{ strtoupper($user->role) }})</h5>
+                <h5 class="card-header">Profile Details</h5>
                 <!-- profile details -->
                 <!-- Account -->              
                 <div class="card-body">                                  

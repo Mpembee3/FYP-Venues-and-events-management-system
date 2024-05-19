@@ -6,7 +6,7 @@
 
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo justify-content-center align-items-center flex-column">
-            <a href="{{ url('dashboard') }}" class="app-brand-link">
+            <a href="{{ url('welcome') }}" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <img src="{{ asset('assets/img/favicon/favicon.ico') }}" alt class="w-px-50 h-auto rounded-circle" />
               </span>
@@ -22,43 +22,43 @@
 
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
-            <li class="menu-item {{ Request::is('dashboard') ? 'active' : '' }}">
-              <a href="{{ url('dashboard') }}" class="menu-link">
+            <li class="menu-item {{ Request::is('welcome') ? 'active' : '' }}">
+              <a href="{{ url('welcome') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
               </a>
             </li>
 
             <!-- Venues (add venue page at href)-->
-            <li class="menu-item {{ Request::is('see_venue*') ? 'active' : '' }}">
-              <a href="{{ url('see_venue') }}" class="menu-link">
+            <li class="menu-item {{ Request::is('venue*') ? 'active' : '' }}">
+              <a href="{{ url('venue_explorer') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Layouts">Venues</div>
               </a>             
             </li>
 
             <!-- Reservation requests (show both accepted, rejected and pending) -->
-            <li class="menu-item {{ Request::is('see_reservations') ? 'active' : '' }}">
-              <a href="{{ url('see_reservations') }}" class="menu-link ">
+            <li class="menu-item {{ Request::is('reservation') ? 'active' : '' }}">
+              <a href="{{ url('see_reservation') }}" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Reservation requests</div>
+                <div data-i18n="Account Settings">Reservation request</div>
               </a>              
             </li>
-            <!-- Events(This show events status(ongoing, upcoming)) -->
+            <!-- Events(This show events status(ongoing, upcoming))
             <li class="menu-item {{ Request::is('see_events') ? 'active' : '' }}">
               <a href="{{ url('see_events') }}" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Account Settings">Events</div>
               </a>              
-            </li> 
+            </li>  -->
 
              <!-- Payments(This show payments status(pending, paid)) -->
-             <li class="menu-item {{ Request::is('see_payments') ? 'active' : '' }}">
-              <a href="{{ url('see_payments') }}" class="menu-link ">
+             <li class="menu-item {{ Request::is('payment') ? 'active' : '' }}">
+              <a href="{{ url('see_payment') }}" class="menu-link ">
               <i class="menu-icon tf-icons bx bx-wallet"></i>
 
 
-                <div data-i18n="Account Settings">Payments</div>
+                <div data-i18n="Account Settings">Payment</div>
               </a>              
             </li>               
 
@@ -84,7 +84,7 @@
           
            
         </aside>
-        <!-- / Menu -->
+       <!-- / Menu -->
 
         <!-- Layout container -->
         <div class="layout-page">
@@ -108,16 +108,16 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="{{ asset('assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle" />
+                      <img src="{{ asset('assets/img/avatars/5.png') }}" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a class="dropdown-item" href="">
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="{{ asset('assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle" />
+                              <img src="{{ asset('assets/img/avatars/5.png') }}" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">

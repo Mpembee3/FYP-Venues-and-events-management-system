@@ -30,12 +30,12 @@
         <div class="col-md-6">
             <ul class="list-group">
                 <li class="list-group-item">Name: {{$venue->name}}</li>
-                <li class="list-group-item">Event: {{$venue->event}}</li>
+                <li class="list-group-item">Event(s): {{$venue->event}}</li>
                 <li class="list-group-item">Capacity: {{$venue->capacity}}</li>
                 <li class="list-group-item">Location:
                     <a href="https://www.google.com/maps/search/?api=1&query={{ $venue->latitude }},{{ $venue->longitude }}" class="btn btn-secondary" target="_blank">Venue Location</a>
                 </li>
-                <li class="list-group-item">Price: {{$venue->Price}}</li>
+                <li class="list-group-item">Price(Tshs): {{$venue->Price}}</li>
                 <li class="list-group-item">Other description: {{$venue->Other_description}}</li>
                 <li class="list-group-item">
                     <div class="row">
