@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //refresh required
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
@@ -19,7 +20,7 @@ return new class extends Migration
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->enum('status', ['pending', 'approved', 'payment_required', 'withdrawn'])->default('pending');
             $table->timestamps();
             });
 
@@ -28,8 +29,8 @@ return new class extends Migration
                 $table->timestamp('admin_approved_at')->nullable();
                 $table->enum('dvc_approval', ['pending', 'approved', 'rejected'])->default('pending');
                 $table->timestamp('dvc_approved_at')->nullable();
-                $table->enum('pro_approval', ['pending', 'approved', 'rejected'])->default('pending');
-                $table->timestamp('pro_approved_at')->nullable();
+                //$table->enum('pro_approval', ['pending', 'approved', 'rejected'])->default('pending');
+                //$table->timestamp('pro_approved_at')->nullable();
             });
 
 

@@ -4,19 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Reservation;
+use App\Models\Payment;
 use App\Models\Venue;
+use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
-class reservationController extends Controller
+class ReservationController extends Controller
 {
-    //method to display reservation requests
-    public function requests(){
-        $data = Reservation::all();
-        return view('reservations', ["data"=>$data]);
-    }
-
-
         
             //method for user to make reservation
             public function create(Request $request)
@@ -61,32 +56,63 @@ class reservationController extends Controller
             
             }
 
+            //checking user's reservations
+            public function userReservations(Request $request)
+            {
+                $user = $request->user();
+                $reservations = Reservation::where('user_id', $user->id)->get();
+
+                return view('reservations.user', compact('reservations'));
+            }
+
+
+            //payment issues
+            public function withdraw($id)
+            {
+                $reservation = Reservation::findOrFail($id);
+
+                if ($reservation->admin_approval == 'pending' || $reservation->dvc_approval == 'pending') {
+                    $reservation->status = 'withdrawn';
+                    $reservation->save();
+                    return redirect()->route('reservations.user')->with('success', 'Reservation withdrawn successfully.');
+                }
+
+                return redirect()->route('user.reservations')->with('error', 'Reservation cannot be withdrawn.');
+            }
 
 
 
-            //reservation approving process admin, dvc, pro
+
+
+            //reservation approving process admin, DVC, PRO(payment for event)
 
         public function approve(Request $request)
     {
         $reservation = Reservation::findOrFail($request->id);
         $user = Auth::user();
 
+        if ($reservation->date < now() ){
+            $reservation->status = 'expired';
+        }
         if ($user->role == 'admin') {
             $reservation->admin_approval = 'approved';
-            $reservation->admin_approved_at = now();
-        } elseif ($user->role == 'dvc') {
-            $reservation->admin_approval == 'approved' ?: abort(403); // Ensure previous approval
+        } elseif ($user->role == 'DVC') {
             $reservation->dvc_approval = 'approved';
-            $reservation->dvc_approved_at = now();
-        } elseif ($user->role == 'pro') {
-            $reservation->dvc_approval == 'approved' ?: abort(403); // Ensure previous approval
-            $reservation->pro_approval = 'approved';
-            $reservation->pro_approved_at = now();
+
         }
+
+        // Check if both admin and DVC approvals are completed
+        if ($reservation->admin_approval == 'approved' && $reservation->dvc_approval == 'approved' ) {
+            $reservation->status = 'payment_required';
+        }         
 
         $reservation->save();
 
+
         return back()->with('success', 'Reservation approved successfully.');
+        //return redirect()->route('reservations')->with('success', 'Reservation approved successfully.');
+        //return redirect()->route('reservations.approve')->with('success', 'Reservation approved successfully.');
+        
     }
 
     public function reject(Request $request, $id)
@@ -96,20 +122,27 @@ class reservationController extends Controller
 
         if ($user->role == 'admin') {
             $reservation->admin_approval = 'rejected';
-        } elseif ($user->role == 'dvc') {
+        } elseif ($user->role == 'DVC') {
             $reservation->dvc_approval = 'rejected';
-        } elseif ($user->role == 'pro') {
-            $reservation->pro_approval = 'rejected';
-        }
-
+        
+         }
+     
+        $reservation->status = 'rejected'; // Set status as rejected
         $reservation->save();
 
         return back()->with('error', 'Reservation rejected.');
+        //return redirect()->route('reservations.reject')->with('error', 'Reservation rejected.');
     }
 
-        
-        
-        
 
-
+        public function index()
+    {
+        $user = Auth::user();
+        $reservations = Reservation::all();
+        
+    
+        return view('reservations.list', compact('reservations', 'user'));
+    }    
+    
+    
 }

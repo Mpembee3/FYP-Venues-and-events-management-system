@@ -32,7 +32,7 @@
                     placeholder="Enter your First name"
                     autofocus
                   />
-                  <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                  <x-input-error :messages="$errors->get('firstname')" class="mt-2" />
                 </div>
                 <div class="mb-3">
                   <label for="surname" class="form-label">Surname</label>
@@ -65,8 +65,9 @@
                       aria-describedby="password"
                     />
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                    
                   </div>
+                  <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 </div>
 
                 <div class="mb-3 form-password-toggle">

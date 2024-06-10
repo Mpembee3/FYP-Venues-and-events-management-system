@@ -27,7 +27,7 @@
                       x-transition
                       x-init="setTimeout(() => show = false, 2000)"
                       class="alert alert-success text-sm text-gray-600 dark:text-gray-400"
-                  >{{ __('Saved.') }}</p>
+                  >{{ __('Saved') }}</p>
                 @endif
 
 
@@ -42,7 +42,7 @@
                 @method('patch')
 
               <div class="card mb-4">
-                <h5 class="card-header">Profile Details</h5>
+                <h5 class="card-header">Profile Details ({{ strtoupper($user->role) }})</h5>
                 <!-- profile details -->
                 <!-- Account -->              
                 <div class="card-body">                                  

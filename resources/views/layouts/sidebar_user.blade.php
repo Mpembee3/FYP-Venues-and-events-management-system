@@ -38,23 +38,23 @@
             </li>
 
             <!-- Reservation requests (show both accepted, rejected and pending) -->
-            <li class="menu-item {{ Request::is('reservation') ? 'active' : '' }}">
-              <a href="{{ url('see_reservation') }}" class="menu-link ">
+            <li class="menu-item {{ Request::is('reservations*') ? 'active' : '' }}">
+              <a href="{{ url('reservations_user') }}" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
                 <div data-i18n="Account Settings">Reservation request</div>
               </a>              
             </li>
-            <!-- Events(This show events status(ongoing, upcoming))
-            <li class="menu-item {{ Request::is('see_events') ? 'active' : '' }}">
-              <a href="{{ url('see_events') }}" class="menu-link ">
+            <!-- Events(This show events status(ongoing, upcoming))-->
+            <li class="menu-item {{ Request::is('events') ? 'active' : '' }}">
+              <a href="{{ url('events') }}" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Account Settings">Events</div>
               </a>              
-            </li>  -->
+            </li>  
 
              <!-- Payments(This show payments status(pending, paid)) -->
              <li class="menu-item {{ Request::is('payment') ? 'active' : '' }}">
-              <a href="{{ url('see_payment') }}" class="menu-link ">
+              <a href="{{ url('payment') }}" class="menu-link ">
               <i class="menu-icon tf-icons bx bx-wallet"></i>
 
 

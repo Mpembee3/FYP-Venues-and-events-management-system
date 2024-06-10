@@ -45,8 +45,8 @@
               </a>              
             </li>
             <!-- Events(This show events status(ongoing, upcoming)) -->
-            <li class="menu-item {{ Request::is('see_events') ? 'active' : '' }}">
-              <a href="{{ url('see_events') }}" class="menu-link ">
+            <li class="menu-item {{ Request::is('events') ? 'active' : '' }}">
+              <a href="{{ url('events') }}" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-table"></i>
                 <div data-i18n="Account Settings">Events</div>
               </a>              
@@ -106,6 +106,14 @@
 
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <!-- dark mode will be implemented here -->
+                           <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0);" id="dark-mode-toggle">
+                              <i class="bx bx-moon"></i>
+                            </a>
+                          </li>
+                  <!-- dark mode will be implemented here -->
+
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
                       <img src="{{ asset('assets/img/avatars/1.png') }}" alt class="w-px-40 h-auto rounded-circle" />

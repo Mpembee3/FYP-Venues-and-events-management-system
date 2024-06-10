@@ -123,7 +123,7 @@ class venueController extends Controller
             abort(404);
         }
 
-        return view('venue_view', compact('venue'));
+        return view('venues.venue_view', compact('venue'));
     }
 
 
@@ -146,7 +146,7 @@ class venueController extends Controller
                 $venues = Venue::all();
             }
         
-            return view('venue_explorer', compact('venues'));       
+            return view('venues.venue_explorer', compact('venues'));       
             
         }
 
@@ -165,11 +165,11 @@ class venueController extends Controller
        
            if (!$venue->isAvailable($date, $start_time, $end_time)) {
             $availabilityMessage = 'Venue is not available for the selected date and time.';
-            return view('venue_view', compact('venue', 'availabilityMessage', 'date', 'start_time', 'end_time'));
+            return view('venues.venue_view', compact('venue', 'availabilityMessage', 'date', 'start_time', 'end_time'));
         }
     
         $availabilityMessage = 'Venue is available for the selected date and time.';
-        return view('venue_view', compact('venue', 'availabilityMessage', 'date', 'start_time', 'end_time'));
+        return view('venues.venue_view', compact('venue', 'availabilityMessage', 'date', 'start_time', 'end_time'));
     }
         
 }

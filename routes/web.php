@@ -1,9 +1,15 @@
 <?php
 
+
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\venueController;
-use App\Http\Controllers\reservationController;
-use App\Http\Controllers\paymentController;
+//use App\Http\Controllers\reservationController;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\PaymentRequestController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\FlutterwaveController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,42 +25,28 @@ use Illuminate\Support\Facades\Route;
 
     //...........login and registration starts.........
     Route::get('/welcome', function () {
-         return view('welcome');
-    });
+
+         return view('welcome');    
+
+        });//->middleware(['auth', 'verified']);
+
+        
   
     Route::get('/reserve', function () {
         return view('reservations.create');
-   });
-
-//    Route::get('/userprofile', function () {
-//     return view('userprofile');
-// });
-    
+   });  
   
      //...........login and registration ends.........
 
 
-
-
+     
 
 //.................VENUE MODULE ROUTES STARTS HERE................
 
+Route::middleware(['auth'])->group(function () {
 
 Route::get('/see_venue', [venueController::class, 'index'])->name('index_venues');
 Route::get('/venue_explorer', [venueController::class, 'explorer'])->name('venue_explorer');
-
-
-// Route::get('/see_dashboard', function () {
-//     return view('dash');
-// });
-
-// Route::get('/see_reservations', function () {
-//     return view('reservations');
-// });
-
-Route::get('/see_events', function () {
-    return view('events');
-});
 
 Route::get('/see_venue_register', function () {
     return view('venues.venue_register');
@@ -74,62 +66,104 @@ Route::get('/venue_view/{id}', [venueController::class, 'view'])->name('venue_vi
 Route::post('/create_venue', [venueController::class, 'create'])->name('create_venue');
 Route::delete('/see_venue_delete/{id}', [venueController::class, 'delete'])->name('see_venue_delete');
 
-//Route::get('/filter_venue', [VenueController::class, 'filter'])->name('venue_explorer');
-
 
 //.................VENUE MODULE ROUTES ENDS HERE................
+});
 
 
 
+
+Route::middleware(['auth'])->group(function () {
 //.................RESERVATIONS MODULE ROUTES STARTS HERE.............
 
-
-// Route::get('/form_reserve/{id}', [reservationController::class, 'reserve'])->name('form_reserve');
-Route::get('/see_reservations', [reservationController::class, 'requests'])->name('see_reservations');
+    //users
 Route::get('/check_availability/{id}', [venueController::class, 'checkAvailability'])->name('check_availability');
-Route::get('/form_reserve', [reservationController::class, 'create'])->name('reservation.create');
-Route::post('/form_reserve', [reservationController::class, 'store'])->name('reservation.store');
+Route::get('/form_reserve', [ReservationController::class, 'create'])->name('reservation.create');
+Route::post('/form_reserve', [ReservationController::class, 'store'])->name('reservation.store');
+
+Route::get('/reservations_user', [ReservationController::class, 'userReservations'])->name('reservations.user');
+
+
+Route::post('/reservations/{id}/withdraw', [ReservationController::class, 'withdraw'])->name('reservations.withdraw');
+Route::get('/payment', [PaymentController::class, 'showPaymentPage'])->name('payment.page');
 
 
 
    //admins
+   Route::get('/see_reservations', [ReservationController::class, 'index'])->name('see_reservations');
    Route::post('/reservations/{id}/approve', [ReservationController::class, 'approve'])->name('reservations.approve');
    Route::post('/reservations/{id}/reject', [ReservationController::class, 'reject'])->name('reservations.reject');
-   
-
-// Route::get('/see_filter_venues', [reservationController::class, 'index'])->name('see_filter_venues');
-
 
 //.................RESERVATIONS MODULE ROUTES ENDS HERE.............
+});
 
 
+// .........EVENTS DASHBOARD MODULE ROUTES STARTS HERE...............
+
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+
+
+
+// .........EVENTS DASHBOARD MODULE ROUTES ENDS HERE...............
 
 
 //.................PAYMENTS MODULE ROUTES STARTS HERE.............
 
-Route::get('/see_payments', [paymentController::class, 'status'])->name('see_payments');
+
+Route::middleware(['auth'])->group(function () {
+    //Route::get('/payment-requests', [PaymentRequestController::class, 'index'])->name('payment-requests.index');
+    //Route::post('/payment-requests', [PaymentRequestController::class, 'store'])->name('payment-requests.store');
+    
+    //Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
+    Route::post('/payments/confirm/{id}', [PaymentController::class, 'confirmPayment'])->name('payment.confirm');
+    Route::get('/see_payments', [PaymentController::class, 'index'])->name('payments.index');
+    
+    Route::post('/payment/initialize/{id}', [PaymentController::class, 'initialize'])->name('payment.initialize');
+    Route::get('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
+    
+   Route::post('/payment/process/{id}', [PaymentController::class, 'processPayment'])->name('payment.process');
+
+    //.................PAYMENTS MODULE ROUTES ENDS HERE.............
+});
 
 
 
-//.................PAYMENTS MODULE ROUTES ENDS HERE.............
-
-
-
-
-
-
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-
-
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
 });
 
+// The route that the button calls to initialize payment
+//Route::post('/pay', [FlutterwaveController::class, 'initialize'])->name('pay');
+// The callback url after a payment
+//Route::get('/rave/callback', [FlutterwaveController::class, 'callback'])->name('callback');
+
+// Route::get('/flutterwave', function () {
+//     return view('flutterwave');
+// });
+// use App\Http\Controllers\FlutterwaveController;
+
+// Route::get('/payment', [FlutterwaveController::class, 'showPaymentForm'])->name('flutterwave.paymentForm');
+// Route::post('/payment/initialize', [FlutterwaveController::class, 'initializePayment'])->name('flutterwave.initialize');
+// Route::get('/payment/callback', [FlutterwaveController::class, 'handleCallback'])->name('flutterwave.callback');
+
+
+
+// The page that displays the payment form
+Route::get('/', function () {
+    return view('flutterwave');
+});
+// The route that the button calls to initialize payment
+Route::post('/pay', [FlutterwaveController::class, 'initialize'])->name('pay');
+// The callback url after a payment
+Route::get('/rave/callback', [FlutterwaveController::class, 'callback'])->name('callback');
+
+
 require __DIR__.'/auth.php';
+
+
+

@@ -7,6 +7,7 @@
  <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner">
+          
           <!-- Register -->
           <div class="card">
             <div class="card-body">
@@ -20,6 +21,8 @@
               
               <!-- /Logo -->
               <h4 class="mb-2">Welcome</h4>
+                  <!-- Session Status -->
+            <x-auth-session-status class="mb-4" :status="session('status')" />  
               <p class="mb-4">Please sign-in to your account</p>
 
               <form id="formAuthentication" class="mb-3" action="{{ route('login') }}" method="POST">
@@ -53,15 +56,24 @@
                       aria-describedby="password"
                       
                     />                    
-                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                    
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>
+                  <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 </div>
                 <div class="mb-3">
-                  <div class="form-check">
+
+                    <!-- Remember Me -->
+                    <div class="block mt-4">
+                        <label for="remember_me" class="inline-flex items-center">
+                            <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
+                            <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
+                        </label>
+                    </div>
+                  <!-- <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="remember-me" />
                     <label class="form-check-label" for="remember-me"> Remember Me </label>
-                  </div>
+                  </div> -->
                 </div>
                 <div class="mb-3">
                   <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
