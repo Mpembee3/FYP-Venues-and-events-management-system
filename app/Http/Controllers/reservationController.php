@@ -9,6 +9,7 @@ use App\Models\Venue;
 use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Mail;
 
 class ReservationController extends Controller
 {
@@ -128,6 +129,7 @@ class ReservationController extends Controller
          }
      
         $reservation->status = 'rejected'; // Set status as rejected
+        Mail::to($user->email)->send(new \App\Mail\Rejected_reservation($user, $reservation));
         $reservation->save();
 
         return back()->with('error', 'Reservation rejected.');

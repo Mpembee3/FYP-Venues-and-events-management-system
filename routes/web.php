@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 
          return view('welcome');    
 
-        });//->middleware(['auth', 'verified']);
+        })->middleware(['auth', 'verified']);
 
         
   

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
 use Rave;
 use App\Models\Payment;
@@ -10,6 +9,7 @@ use App\Models\Event;
 use App\Models\Reservation;
 use Flutterwave\Flutterwave;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class PaymentController extends Controller
 {
@@ -98,6 +98,7 @@ class PaymentController extends Controller
     
         // Create or update event
         $reservation = $payment->reservation;
+        $user = $reservation->user;
         Event::updateOrCreate(
             ['payment_id' => $payment->id],
             [
@@ -106,6 +107,12 @@ class PaymentController extends Controller
                 'updated_at' => now(),
             ]
         );
+            // Send the email to the user
+            // Mail::send('emails.approved', ['user' => $user, 'reservation' => $reservation], function ($message) use ($user) {
+            //     $message->to($user->email)
+            //             ->subject('Your Reservation is Approved');
+            // });
+            Mail::to($user->email)->send(new \App\Mail\Approved_reservation($user, $reservation));
 
              return redirect()->route('payments.index')->with('success', 'Payment confirmed successfully.');
         }
