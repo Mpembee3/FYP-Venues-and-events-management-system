@@ -21,11 +21,11 @@ class Payment extends Model
 
     public function reservation()
     {
-        return $this->belongsTo(Reservation::class, 'reservation_id', 'id');
+        return $this->belongsTo(Reservation::class);
     }
 
     public function event()
     {
-        return $this->hasMany(Event::class);
+        return $this->hasOne(Event::class);
     }
 }

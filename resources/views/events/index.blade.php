@@ -24,7 +24,7 @@
                         </thead>
                         <tbody>
                             @foreach ($events as $event)
-                                <tr>
+                            <tr class="@if ($event->status == 'upcoming') table-warning @elseif ($event->status == 'ongoing') table-success @elseif ($event->status == 'completed') table-secondary @endif">
                                     <td>{{ $event->id }}</td>
                                     <td>{{ $event->payment->reservation->venue->name }}</td>
                                     <td>{{ $event->payment->reservation->event_id }}</td>

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Venue;
+use App\Models\Event;
 use App\Models\User;
 use App\Models\Payment;
 
@@ -32,6 +33,11 @@ class Reservation extends Model
     public function payment()
     {
         return $this->hasOne(Payment::class);
+    }
+
+    public function event()
+    {
+        return $this->hasOne(Event::class);
     }
 
 }
