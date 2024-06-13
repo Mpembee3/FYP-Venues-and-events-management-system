@@ -6,6 +6,7 @@ use App\Models\Reservation;
 use App\Models\Venue;
 use App\Models\Event;
 use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +22,20 @@ class DashboardController extends Controller
         $registeredVenues = Venue::count();
         $ongoingEvents = Event::where('status', 'ongoing')->count();
         $upcomingEvents = Event::where('status', 'upcoming')->count();
+        $registeredUsers = User::where('role', 'user')->count();
         // $totalRevenue = Reservation::sum('amount'); // Assuming there's an 'amount' field in reservations
+        $totalRevenue = Event::with(['payment.reservation'])
+            ->get()
+            ->sum(function ($totalRevenue) {
+                $price = $totalRevenue->payment->reservation->venue->Price;
+                $totalRevenue->price;
+                $totalRevenue->save();
+
+            });
+
+        $pendingPayments = Payment::where('payment_status', 'pending')->count();
+        $newPayments = Reservation::where('created_at', '>', now()->subDay())->count();
+
 
         // Pending approvals based on user role
         $pendingApprovals = 0;
@@ -41,12 +55,12 @@ class DashboardController extends Controller
         // $reservationTrendData = [15, 20, 25, 30, 35, 40]; // Example data
 
         return view('dashboard', compact(
-            'totalReservations',
+            'totalReservations', 'newPayments',
             'newReservations',
             'registeredVenues',
             'ongoingEvents',
             'upcomingEvents',
-            'pendingApprovals'
+            'pendingApprovals', 'registeredUsers', 'totalRevenue', 'pendingPayments',
         ));
     }
 }

@@ -17,9 +17,12 @@
                         {{ session('success') }}
                     </div>
                     @endif
-                    <a href="{{ url('see_venue_register') }}" class="btn rounded-pill btn-info">Add new</a>
-                    <h4 class="fw-bold py-3 mb-4"></h4>
+                    
                 </div>
+                <div class="card">
+            <div class="card-body">
+            <a href="{{ url('see_venue_register') }}" class="btn rounded-pill btn-info">Add new</a>
+            <h4 class="fw-bold py-3 mb-2"></h4>
                 <div class="row">
                     @foreach ($data as $venue)
                     <div class="col-md-6 mb-4">
@@ -51,6 +54,8 @@
             <!-- / Content -->
         </div>
     </div>
+</div>
+</div>
 </div>
 
 

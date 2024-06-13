@@ -9,6 +9,8 @@
     <div class="demo-inline-spacing">
         <h4 class="fw-bold py-3 mb-4">Venue description</h4>
     </div>
+    <div class="card">
+            <div class="card-body">
 
     <div class="row">
         <!-- Image Carousel -->
@@ -55,6 +57,8 @@
             </ul>
         </div>
     </div>
+</div>
+</div>
 </div>
 <!-- / Content -->
 

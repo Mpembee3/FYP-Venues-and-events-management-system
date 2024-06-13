@@ -94,6 +94,9 @@ class ReservationController extends Controller
 
         if ($reservation->date < now() ){
             $reservation->status = 'expired';
+            $reservation->admin_approval = ' ';
+            $reservation->pro_approval = ' ';
+            $reservation->dvc_approval = ' ';
         }
         if ($user->role == 'admin') {
             $reservation->admin_approval = 'approved';

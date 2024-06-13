@@ -9,6 +9,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PaymentRequestController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\FlutterwaveController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,8 +39,16 @@ use Illuminate\Support\Facades\Route;
   
      //...........login and registration ends.........
 
+//.................USERS MANAGEMENT MODULE ROUTES STARTS HERE................ 
 
-     
+
+Route::middleware(['auth', 'role:PRO'])->group(function () {
+    Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+    Route::patch('/admin/users/{user}/role', [UserController::class, 'updateRole'])->name('admin.users.updateRole');
+});
+
+//................USERS MANAGEMENT ROUTES ENDS HERE................
 
 //.................VENUE MODULE ROUTES STARTS HERE................
 
@@ -154,13 +163,13 @@ Route::middleware('auth')->group(function () {
 
 
 // The page that displays the payment form
-Route::get('/', function () {
-    return view('flutterwave');
-});
-// The route that the button calls to initialize payment
-Route::post('/pay', [FlutterwaveController::class, 'initialize'])->name('pay');
-// The callback url after a payment
-Route::get('/rave/callback', [FlutterwaveController::class, 'callback'])->name('callback');
+// Route::get('/', function () {
+//     return view('flutterwave');
+// });
+// // The route that the button calls to initialize payment
+// Route::post('/pay', [FlutterwaveController::class, 'initialize'])->name('pay');
+// // The callback url after a payment
+// Route::get('/rave/callback', [FlutterwaveController::class, 'callback'])->name('callback');
 
 
 require __DIR__.'/auth.php';

@@ -24,17 +24,36 @@ class Venue extends Model
 }
 
 
-    public function isAvailable($date)
-{
-    // Check if there are any reservations for the venue on the given date
-    return $this->reservations()->where('date', $date)->count() == 0;
-}
+//     public function isAvailable($date)
+// {
+//     // Check if there are any reservations for the venue on the given date
+//     return $this->reservations()->where('date', $date)->count() == 0;
+// }
 
-    public function getEventListAttribute()
+    // public function getEventListAttribute()
+    // {
+    //     return json_decode($this->event, true);
+    // }
+
+    public function isAvailable($date, $start_time, $end_time)
     {
-        return json_decode($this->event, true);
-    }
+            // Check if any reservation overlaps with the given date and time
+        $overlappingReservations = $this->reservations()
+        ->where('date', $date)
+        ->where(function($query) use ($start_time, $end_time) {
+            $query->where(function($query) use ($start_time, $end_time) {
+                $query->whereTime('start_time', '<', $end_time)
+                    ->whereTime('end_time', '>', $end_time);
+            })
+            ->orWhere(function($query) use ($start_time, $end_time) {
+                $query->whereTime('start_time', '<', $end_time)
+                    ->whereTime('end_time', '>', $start_time);
+            });
+        })->count();
 
+        return $overlappingReservations === 0;
+    }
+}
 
     
-}
+

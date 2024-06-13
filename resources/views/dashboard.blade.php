@@ -7,13 +7,19 @@
 <div class="content-wrapper">
     <!-- Content -->
     <!-- Welcome back section -->
-    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="container-xxl flex-grow-1 container-p-y">
         <div class="row">
+        @if(session('error'))
+        <script>
+            alert('{{ session('error') }}');
+            
+        </script>
+        @endif
             <div class="col-lg-12 mb-4 order-0">
                 <div class="card">
                     <div class="d-flex align-items-end row">
                         <div class="col-sm-7">
-                            <div class="card-body">
+                            <div class="card-body">                           
                                 <h5 class="card-title text-primary">Login as {{ Auth::user()->role }}!</h5>
                                 <!-- Add any additional content for the welcome back section here -->
                             </div>
@@ -54,16 +60,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-12 col-6 mb-4">
+                    <div class="col-6 mb-4">
                         <div class="card">
                             <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
                                     <div class="avatar flex-shrink-0">
-                                        <img src="{{ asset('assets/img/icons/unicons/chart-success.png') }}" alt="" class="rounded"/>
+                                        <img src="{{ asset('assets/img/icons/unicons/wallet.png') }}" alt="Credit Card" class="rounded"/>
                                     </div>
                                 </div>
-                                <span>Upcoming Events</span>
-                                <h4 class="card-title text-nowrap mb-1">{{ $upcomingEvents }} events</h4>
+                                <span class="d-block mb-1">Total Revenue</span>
+                                <h4 class="card-title text-nowrap mb-1">{{ $totalRevenue }} TZS</h4>
+                               
                             </div>
                         </div>
                     </div>
@@ -75,7 +82,8 @@
                                         <img src="{{ asset('assets/img/icons/unicons/chart-primary.png') }}" alt="" class="rounded"/>
                                     </div>
                                 </div>
-                       
+                                <span>Total users</span>
+                                <h4 class="card-title text-nowrap mb-1">{{ $registeredUsers }} users</h4>                       
                             </div>
                         </div>
                     </div>
@@ -88,7 +96,9 @@
                                         <img src="{{ asset('assets/img/icons/unicons/chart-primary.png') }}" alt="" class="rounded"/>
                                     </div>
                                 </div>
-                       
+                                <span>Pending payments</span>
+                                <h4 class="card-title text-nowrap mb-1">{{ $pendingPayments }} payments</h4> 
+                                <span class="text-muted">New: {{ $newPayments }}</span>                      
                             </div>
                         </div>
                     </div>
@@ -99,30 +109,16 @@
             <div class="col-lg-6 col-md-6 order-2">
                 <!-- Segment 2 -->
                 <div class="row">
-                    <div class="col-6 mb-4">
+                <div class="col-lg-6 col-md-12 col-6 mb-4">
                         <div class="card">
                             <div class="card-body">
                                 <div class="card-title d-flex align-items-start justify-content-between">
                                     <div class="avatar flex-shrink-0">
-                                        <img src="{{ asset('assets/img/icons/unicons/wallet.png') }}" alt="Credit Card" class="rounded"/>
+                                        <img src="{{ asset('assets/img/icons/unicons/chart-success.png') }}" alt="" class="rounded"/>
                                     </div>
                                 </div>
-                                <span class="d-block mb-1">Total Revenue</span>
-                               
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="card-title d-flex align-items-start justify-content-between">
-                                    <div class="avatar flex-shrink-0">
-                                        <img src="{{ asset('assets/img/icons/unicons/cc-primary.png') }}" alt="" class="rounded"/>
-                                    </div>
-                                </div>
-                                <span class="fw-semibold d-block mb-1">Requests</span>
-                                <h4 class="card-title mb-2">{{ $totalReservations }} requests</h4>
-                                <span class="text-muted">New: {{ $newReservations }}</span>
+                                <span>Upcoming Events</span>
+                                <h4 class="card-title text-nowrap mb-1">{{ $upcomingEvents }} events</h4>
                             </div>
                         </div>
                     </div>
@@ -139,6 +135,25 @@
                             </div>
                         </div>
                     </div>
+
+
+
+
+                    <div class="col-6 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title d-flex align-items-start justify-content-between">
+                                    <div class="avatar flex-shrink-0">
+                                        <img src="{{ asset('assets/img/icons/unicons/cc-primary.png') }}" alt="" class="rounded"/>
+                                    </div>
+                                </div>
+                                <span class="fw-semibold d-block ">Requests</span>
+                                <h4 class="card-title mb-2">{{ $totalReservations }} requests</h4>
+                                <span class="text-muted">New: {{ $newReservations }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="col-6 mb-4">
                         <div class="card">
                             <div class="card-body">

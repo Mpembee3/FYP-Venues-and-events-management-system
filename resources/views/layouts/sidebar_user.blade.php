@@ -63,7 +63,7 @@
             </li>               
 
             <!-- Other stuffs can be added here -->
-            <li class="menu-item">
+            <!-- <li class="menu-item">
               <a href=" " class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-cube-alt"></i>
                 <div data-i18n="Misc">Misc</div>
@@ -79,7 +79,7 @@
                     <div data-i18n=" "></div>
                   </a>
                 </li>
-              </ul>
+              </ul> -->
             </li>       
           
            

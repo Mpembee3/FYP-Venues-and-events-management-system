@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Venue;
+use App\Models\Reservation;
 use Carbon\Carbon;
 
 class venueController extends Controller
@@ -156,20 +157,42 @@ class venueController extends Controller
 
 
 
-       public function checkAvailability(Request $request, $id)
-       {
-           $venue = Venue::findOrFail($id);
-           $date = request()->query('date');
-           $start_time = $request->input('start_time');
-           $end_time = $request->input('end_time');
+    //    public function checkAvailability(Request $request, $id)
+    //    {
+    //        $venue = Venue::findOrFail($id);
+    //        $date = request()->query('date');
+    //        $start_time = $request->input('start_time');
+    //        $end_time = $request->input('end_time');
        
-           if (!$venue->isAvailable($date, $start_time, $end_time)) {
-            $availabilityMessage = 'Venue is not available for the selected date and time.';
-            return view('venues.venue_view', compact('venue', 'availabilityMessage', 'date', 'start_time', 'end_time'));
-        }
+    //        if (!$venue->isAvailable($date, $start_time, $end_time)) {
+    //         $availabilityMessage = 'Venue is not available for the selected date and time.';
+    //         return view('venues.venue_view', compact('venue', 'availabilityMessage', 'date', 'start_time', 'end_time'));
+    //     }
     
-        $availabilityMessage = 'Venue is available for the selected date and time.';
-        return view('venues.venue_view', compact('venue', 'availabilityMessage', 'date', 'start_time', 'end_time'));
+    //     $availabilityMessage = 'Venue is available for the selected date and time.';
+    //     return view('venues.venue_view', compact('venue', 'availabilityMessage', 'date', 'start_time', 'end_time'));
+    // }
+    public function checkAvailability(Request $request, $id)
+    {
+        $venue = Venue::findOrFail($id);
+        $date = request()->query('date');
+        $start_time = $request->input('start_time');
+        $end_time = $request->input('end_time');
+
+        $isAvailable = $venue->isAvailable($date, $start_time, $end_time);
+
+        if ($isAvailable) {
+            $availabilityMessage = "The venue is available for the selected time slot.";
+        } else {
+            $availabilityMessage = "The venue is not available for the selected time slot.";
+        }
+
+        return redirect()->route('venue_view', ['id' => $venue->id])
+                         ->with('availabilityMessage', $availabilityMessage)
+                         ->with('date', $date)
+                         ->with('start_time', $start_time)
+                         ->with('end_time', $end_time);
     }
+
         
 }
