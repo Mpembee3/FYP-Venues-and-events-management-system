@@ -140,13 +140,23 @@ class ReservationController extends Controller
     }
 
 
-        public function index()
+        public function index(Request $request)
     {
         $user = Auth::user();
         $reservations = Reservation::all();
+        $search = $request->input('search');
+
+        $reservations = Reservation::with(['user', 'venue'])
+        ->when($search, function ($query, $search) {
+            return $query->whereHas('user', function ($query) use ($search) {
+                $query->where('firstname', 'like', "%{$search}%")
+                      ->orWhere('surname', 'like', "%{$search}%");
+            })->orWhere('date', 'like', "%{$search}%");
+        })
+        ->paginate(5);
         
     
-        return view('reservations.list', compact('reservations', 'user'));
+        return view('reservations.list', compact('reservations', 'user', 'search'));
     }    
     
     
