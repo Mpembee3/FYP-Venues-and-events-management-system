@@ -63,4 +63,53 @@ class DashboardController extends Controller
             'pendingApprovals', 'registeredUsers', 'totalRevenue', 'pendingPayments',
         ));
     }
+
+
+
+    public function user()
+    {
+        $user = Auth::user();
+
+        // Basic data
+        $reservation = Reservation::where('user_id', $user->id)->get();
+        $totalReservations = $reservation->count();
+        //$newReservations = Reservation::where('created_at', '>', now()->subDay())->count();
+        $registeredVenues = Venue::count();
+        $userEvents = Event::whereHas('payment.reservation', function($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->get();
+        $ongoingEvents = $userEvents->where('status', 'ongoing')->count();
+        $upcomingEvents = $userEvents->where('status', 'upcoming')->count();
+        //$registeredUsers = User::where('role', 'user')->count();
+        // $totalRevenue = Reservation::sum('amount'); // Assuming there's an 'amount' field in reservations
+        
+        $pendingPayments = Payment::where('payment_status', 'pending')
+                ->whereHas('reservation', function($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                })->count();
+
+        $paymentApprovals = Payment::where('pro_approval', 'confirmed')
+                ->whereHas('reservation', function($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                })->count();
+        //$newPayments = Reservation::where('created_at', '>', now()->subDay())->count();
+
+
+        // Pending approvals based on user role
+        $status = $reservation->where('status', 'pending');
+        $pendingApprovals = 0;
+        if ($user->role == 'user' && $status == 'pending') {
+            $pendingApprovals = Reservation::where('admin_approval', 'pending' || 'dvc_approval', 'pending')->count();
+            
+        } 
+
+            return view('welcome', compact(
+            'totalReservations', 'registeredVenues',
+            'paymentApprovals',
+            'ongoingEvents',
+            'upcomingEvents',
+            'pendingApprovals', 'pendingPayments',
+        ));
+    }
+
 }

@@ -73,6 +73,7 @@
                                                     <p>Venue: {{ $reservation->venue->name }}</p>
                                                     <p>Event: {{ $reservation->event_id }}</p>
                                                     <p>Date: {{ $reservation->date }}</p>
+                                                    <p>Amount(TZS): {{ $reservation->venue->Price }}</p>
                                                     <p>Control Number: {{ $reservation->payment->control_number }}</p>
                                                     @if($reservation->payment->payment_status == 'pending' && $reservation->status != 'expired')
                                                         <!-- Payment form -->

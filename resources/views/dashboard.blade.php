@@ -55,8 +55,8 @@
                                         <img src="{{ asset('assets/img/icons/unicons/cc-success.png') }}" alt="" class="rounded"/>
                                     </div>
                                 </div>
-                                <span class="fw-semibold d-block mb-1">Venues</span>
-                                <h4 class="card-title mb-2">{{ $registeredVenues }} halls</h4>
+                                <span>Venues</span>
+                                <h4 class="card-title text-nowrap mb-1">{{ $registeredVenues }} halls</h4>
                             </div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                                         <img src="{{ asset('assets/img/icons/unicons/wallet.png') }}" alt="Credit Card" class="rounded"/>
                                     </div>
                                 </div>
-                                <span class="d-block mb-1">Total Revenue</span>
+                                <span>Total Revenue</span>
                                 <h4 class="card-title text-nowrap mb-1">{{ $totalRevenue }} TZS</h4>
                                
                             </div>
@@ -130,8 +130,8 @@
                                         <img src="{{ asset('assets/img/icons/unicons/cc-primary.png') }}" alt="" class="rounded"/>
                                     </div>
                                 </div>
-                                <span class="fw-semibold d-block mb-1">Ongoing Events</span>
-                                <h4 class="card-title mb-2">{{ $ongoingEvents }} events</h4>
+                                <span>Ongoing Events</span>
+                                <h4 class="card-title text-nowrap mb-1">{{ $ongoingEvents }} events</h4>
                             </div>
                         </div>
                     </div>
@@ -147,8 +147,8 @@
                                         <img src="{{ asset('assets/img/icons/unicons/cc-primary.png') }}" alt="" class="rounded"/>
                                     </div>
                                 </div>
-                                <span class="fw-semibold d-block ">Requests</span>
-                                <h4 class="card-title mb-2">{{ $totalReservations }} requests</h4>
+                                <span>Requests</span>
+                                <h4 class="card-title text-nowrap mb-1">{{ $totalReservations }} requests</h4>
                                 <span class="text-muted">New: {{ $newReservations }}</span>
                             </div>
                         </div>
@@ -162,8 +162,8 @@
                                         <img src="{{ asset('assets/img/icons/unicons/wallet.png') }}" alt="Credit Card" class="rounded"/>
                                     </div>
                                 </div>
-                                <span class="d-block mb-1">Pending Approvals</span>
-                                <h4 class="card-title text-nowrap mb-2">{{ $pendingApprovals }}</h4>
+                                <span>Pending Approvals</span>
+                                <h4 class="card-title text-nowrap mb-1">{{ $pendingApprovals }}</h4>
                             </div>
                         </div>
                     </div>

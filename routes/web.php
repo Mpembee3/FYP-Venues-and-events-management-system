@@ -25,13 +25,10 @@ use Illuminate\Support\Facades\Route;
 */
 
     //...........login and registration starts.........
-    Route::get('/welcome', function () {
-
-         return view('welcome');    
-
-        })->middleware(['auth', 'verified']);
-
-        
+    Route::get('/welcome', [DashboardController::class, 'user'])->name('welcome')->middleware(['auth', 'verified']);
+  
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['auth', 'verified']);
+       
   
     Route::get('/reserve', function () {
         return view('reservations.create');
@@ -136,8 +133,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
