@@ -62,7 +62,7 @@
                     <!-- Button to trigger modal -->
                     <li class="list-group-item">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#availabilityModal">
-                            Check Venue Availability
+                            Reserve
                         </button>
                     </li>            
                 </ul>
