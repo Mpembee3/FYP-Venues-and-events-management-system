@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -29,6 +30,27 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->route('admin.users.index')->with('success', 'User role updated successfully.');
+    }
+
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'firstname' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'role' => 'required|string',
+        ]);
+
+        User::create([
+            'firstname' => $request->firstname,
+            'surname' => $request->surname,
+            'email' => $request->email,
+            'password' => Hash::make('password'), // Default password, should be changed by the user
+            'role' => $request->role,
+        ]);
+
+        return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
     }
 }
 
