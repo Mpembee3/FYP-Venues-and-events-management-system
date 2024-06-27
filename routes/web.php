@@ -136,6 +136,7 @@ Route::middleware(['auth'])->group(function () {
     
    Route::post('/payment/process/{id}', [PaymentController::class, 'processPayment'])->name('payment.process');
 
+   Route::get('payments/create/{reservationId}', [PaymentController::class, 'createPayment'])->name('payments.create');
     //.................PAYMENTS MODULE ROUTES ENDS HERE.............
 });
 

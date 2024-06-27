@@ -21,8 +21,8 @@
                         <div class="col-sm-5 text-center text-sm-left">
                             <div class="card-body pb-0 px-0 px-md-4">
                                 <img
-                                    src="{{ asset('assets/img/illustrations/man-with-laptop-light.png') }}"
-                                    height="140"
+                                    src="{{ asset('assets/img/illustrations/time-management-pana.png') }}"
+                                    height="160"
                                     alt=""
                                     data-app-dark-img="illustrations/man-with-laptop-dark.png"
                                     data-app-light-img="illustrations/man-with-laptop-light.png"
