@@ -108,9 +108,15 @@ class ReservationController extends Controller
         // Check if both admin and DVC approvals are completed
         if ($reservation->admin_approval == 'approved' && $reservation->dvc_approval == 'approved' ) {
             $reservation->status = 'payment_required';
-        }         
+            $reservation->save();
+          // Redirect to PaymentController to create a payment
+            return redirect()->route('payments.create', $reservation->id)->with('success', 'Reservation approved successfully. Payment creation initiated.');
+            } else {
+                $reservation->save();
+            }  
+         
 
-        $reservation->save();
+        
 
 
         return back()->with('success', 'Reservation approved successfully.');

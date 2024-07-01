@@ -18,24 +18,26 @@ class PaymentController extends Controller
         $reservation = Reservation::findOrFail($reservationId);
 
         // Check if the reservation is approved for payment
-        if ($reservation->admin_approval == 'approved' && $reservation->dvc_approval == 'approved') {
+        if ($reservation->admin_approval == 'approved' && $reservation->dvc_approval == 'approved' && $reservation->status == 'payment_required') {
             $payment = Payment::create([
                 'reservation_id' => $reservation->id,
                 'control_number' => $this->generateControlNumber(), // Implement this method to generate a control number
-                'status' => 'pending',
+                'payment_status' => 'pending',
                 'pro_approval' => 'pending'
             ]);
-
-            return redirect()->route('payments.index')->with('success', 'Payment created successfully.');
+            //$payment = save();
+            return redirect()->route('see_reservations')->with('success', 'Reservation approved. Payment created successfully.');
         }
 
-        return redirect()->route('reservations.index')->with('error', 'Reservation not approved for payment.');
+        return redirect()->route('see_reservations')->with('error', 'Reservation not approved for payment.');
     }
 
     private function generateControlNumber()
     {
         // Implement your control number generation logic here
-        return 'CN' . time();
+           $reference = Rave::generateReference();
+           return $reference;
+
     }
 
 
@@ -63,7 +65,7 @@ class PaymentController extends Controller
                                ->with(['payment', 'venue']) // Eager load related models
                                ->get();
             
-        // dd($reservations);
+         //dd($reservations);
         //debug technique to show data in web
 
         
@@ -128,14 +130,19 @@ class PaymentController extends Controller
         public function initialize(Request $request, $reservation_id)
         {
             $reservation = Reservation::findOrFail($reservation_id);
-            
-            $reference = Rave::generateReference();
-            // Create a new payment record
-            $payment = Payment::create([
-                'reservation_id' => $reservation->id,
-                'payment_status' => 'pending',
-                'control_number' => $reference,
-            ]);
+
+            // Check for an existing payment record
+            $payment = Payment::where('reservation_id', $reservation->id)->first();
+                       
+        //     $reference = Rave::generateReference();
+        //    //Create a new payment record
+        //     $payment = Payment::create([
+        //         'reservation_id' => $reservation->id,
+        //         'payment_status' => 'pending',
+        //         'control_number' => $reference,
+        //     ]);
+
+            //$payment = Payment::findOrFail($request->id);
     
             // Initialize payment
             $data = [
