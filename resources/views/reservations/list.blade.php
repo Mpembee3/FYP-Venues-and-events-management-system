@@ -1,6 +1,8 @@
 @extends('layouts.sidebar')
 @section('title', 'Reservation requests')
+use Carbon\Carbon;
 @section('content2')
+
 
 <div class="content-wrapper">
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -34,7 +36,7 @@
                     <table class="table table-bordered" id="reservationsTable">
                         <thead>
                             <tr>
-                                <th>S/N</th>
+                                <th>ID</th>
                                 <th>Event Organizer</th>
                                 <th>Date</th>
                                 <th>Status</th>
@@ -48,7 +50,7 @@
                                     <td>{{ $reservation->user->firstname }} {{ $reservation->user->surname }}</td>
                                     <td>{{ $reservation->date }}</td>
                                     <td>
-                                        @if ($reservation->date < now())
+                                        @if (Carbon\Carbon::parse($reservation->date . ' ' . $reservation->end_time) < now())
                                             <span class="badge bg-secondary">Expired</span>
                                         @elseif ($reservation->status == 'payment_required')
                                             <span class="badge bg-label-success me-1">Approved</span>
@@ -97,7 +99,7 @@
                             <p><strong>Date:</strong> {{ $reservation->date }}</p>
                             <p><strong>Time:</strong> {{ $reservation->start_time }} - {{ $reservation->end_time }}</p>
                             <p><strong>Status:</strong>
-                                @if ($reservation->date < now())
+                                @if (Carbon\Carbon::parse($reservation->date . ' ' . $reservation->end_time) < now())
                                     <span class="badge bg-label-secondary me-1">Expired</span>
                                 @elseif ($reservation->status == 'payment_required')
                                     <span class="badge bg-label-success me-1">Approved</span>
@@ -114,7 +116,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            @if ($reservation->date >= now())
+                                @if (Carbon\Carbon::parse($reservation->date . ' ' . $reservation->end_time) >= now())
                                 @if ($user->role == 'admin' && $reservation->admin_approval == 'pending')
                                     <form action="{{ route('reservations.approve', $reservation->id) }}" method="POST" style="display:inline-block;">
                                         @csrf

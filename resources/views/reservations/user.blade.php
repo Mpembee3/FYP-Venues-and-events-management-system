@@ -1,6 +1,9 @@
 @extends('layouts.sidebar_user')
 @section('title', 'My Reservations')
+use Carbon\Carbon;
 @section('content2')
+
+
 
 <div class="content-wrapper">
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -42,7 +45,7 @@
                     <td>{{ $reservation->event_id }}</td>
                     <td>{{ $reservation->date }}</td>
                     <td>
-                        @if ($reservation->date < now())
+                        @if (Carbon\Carbon::parse($reservation->date . ' ' . $reservation->end_time) < now())
                             <span class="badge bg-secondary">Expired</span>
                             <!-- display first the paid details and no more  -->
                         @elseif($reservation->status == 'withdrawn')
@@ -63,7 +66,7 @@
                         @endif
                     </td>
                     <td>
-                        @if ($reservation->date < now())
+                        @if (Carbon\Carbon::parse($reservation->date . ' ' . $reservation->end_time) < now())
                             <span class="badge bg-secondary">Expired</span>
                         @else
                             @if ($reservation->status == 'withdrawn')

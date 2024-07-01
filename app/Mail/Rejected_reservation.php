@@ -5,6 +5,8 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use App\Model\User;
+use App\Model\Reservation;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -12,6 +14,9 @@ use Illuminate\Queue\SerializesModels;
 class Rejected_reservation extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $user;
+    public $reservation;
 
     /**
      * Create a new message instance.

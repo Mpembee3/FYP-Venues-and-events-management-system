@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Mail;
 
+
+
 class ReservationController extends Controller
 {
         
@@ -92,10 +94,10 @@ class ReservationController extends Controller
         $reservation = Reservation::findOrFail($request->id);
         $user = Auth::user();
 
-        if ($reservation->date < now() ){
+        if ($reservation->date . ' ' . $reservation-> end_time < now() ){
             $reservation->status = 'expired';
             $reservation->admin_approval = ' ';
-            $reservation->pro_approval = ' ';
+            //$reservation->pro_approval = ' ';
             $reservation->dvc_approval = ' ';
         }
         if ($user->role == 'admin') {
@@ -128,16 +130,17 @@ class ReservationController extends Controller
     public function reject(Request $request, $id)
     {
         $reservation = Reservation::findOrFail($id);
-        $user = Auth::user();
+        $user1 = Auth::user();
 
-        if ($user->role == 'admin') {
+        if ($user1->role == 'admin') {
             $reservation->admin_approval = 'rejected';
-        } elseif ($user->role == 'DVC') {
+        } elseif ($user1->role == 'DVC') {
             $reservation->dvc_approval = 'rejected';
         
          }
      
         $reservation->status = 'rejected'; // Set status as rejected
+        $user = $reservation->user;
         Mail::to($user->email)->send(new \App\Mail\Rejected_reservation($user, $reservation));
         $reservation->save();
 
@@ -159,7 +162,7 @@ class ReservationController extends Controller
                       ->orWhere('surname', 'like', "%{$search}%");
             })->orWhere('date', 'like', "%{$search}%");
         })
-        ->paginate(5);
+        ->paginate(10);
         
     
         return view('reservations.list', compact('reservations', 'user', 'search'));
