@@ -53,6 +53,12 @@
                   <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
 
+                <div class="mb-3">
+                  <label for="phone" class="form-label">Phone</label>
+                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter your phone" />
+                  <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+                </div>
+
                 <div class="mb-3 form-password-toggle">
                   <label class="form-label" for="password">Password</label>
                 <div class="input-group input-group-merge">
