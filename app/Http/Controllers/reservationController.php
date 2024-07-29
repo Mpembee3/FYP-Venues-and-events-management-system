@@ -92,7 +92,8 @@ class ReservationController extends Controller
         public function approve(Request $request)
     {
         $reservation = Reservation::findOrFail($request->id);
-        $user = Auth::user();
+        $user1 = Auth::user();
+        $user = $reservation->user;
 
         if ($reservation->date . ' ' . $reservation-> end_time < now() ){
             $reservation->status = 'expired';
@@ -100,9 +101,9 @@ class ReservationController extends Controller
             //$reservation->pro_approval = ' ';
             $reservation->dvc_approval = ' ';
         }
-        if ($user->role == 'admin') {
+        if ($user1->role == 'admin') {
             $reservation->admin_approval = 'approved';
-        } elseif ($user->role == 'DVC') {
+        } elseif ($user1->role == 'DVC') {
             $reservation->dvc_approval = 'approved';
 
         }
@@ -111,6 +112,7 @@ class ReservationController extends Controller
         if ($reservation->admin_approval == 'approved' && $reservation->dvc_approval == 'approved' ) {
             $reservation->status = 'payment_required';
             $reservation->save();
+            Mail::to($user->email)->send(new \App\Mail\Payment_required($user, $reservation));
           // Redirect to PaymentController to create a payment
             return redirect()->route('payments.create', $reservation->id)->with('success', 'Reservation approved successfully. Payment creation initiated.');
             } else {
@@ -153,19 +155,17 @@ class ReservationController extends Controller
     {
         $user = Auth::user();
         $reservations = Reservation::all();
-        $search = $request->input('search');
+        
 
-        $reservations = Reservation::with(['user', 'venue'])
-        ->when($search, function ($query, $search) {
-            return $query->whereHas('user', function ($query) use ($search) {
-                $query->where('firstname', 'like', "%{$search}%")
-                      ->orWhere('surname', 'like', "%{$search}%");
-            })->orWhere('date', 'like', "%{$search}%");
-        })
-        ->paginate(10);
+        // $reservations = Reservation::with(['user', 'venue'])
+        // ->when(function ($query) {
+        //     return $query->whereHas('user', function ($query){}
+        //         );
+        // })
+        // ;
         
     
-        return view('reservations.list', compact('reservations', 'user', 'search'));
+        return view('reservations.list', compact('reservations', 'user'));
     }    
     
     

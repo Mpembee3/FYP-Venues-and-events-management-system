@@ -1,12 +1,11 @@
 @extends('layouts.sidebar')
-@section('title', 'Reservation requests')
-use Carbon\Carbon;
+
+@section('title', 'Reservation Requests')
+
 @section('content2')
-
-
 <div class="content-wrapper">
     <div class="container-xxl flex-grow-1 container-p-y">
-        <h4 class="fw-bold py-3 mb-4">Reservation requests</h4>
+        <h4 class="fw-bold py-3 mb-4">Reservation Requests</h4>
 
         @if(session('success'))
             <div class="alert alert-success">
@@ -22,18 +21,7 @@ use Carbon\Carbon;
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive text-nowrap">
-
-                    <!-- Search Form -->
-                    <form action="{{ route('see_reservations') }}" method="GET" class="row mb-4">
-                        <div class="col-md-8">
-                            <input type="text" name="search" class="form-control" placeholder="Search by organizer or date" value="{{ request()->input('search') }}">
-                        </div>
-                        <div class="col-md-4">
-                            <button type="submit" class="btn btn-primary">Search</button>
-                        </div>
-                    </form>
-
-                    <table class="table table-bordered" id="reservationsTable">
+                    <table class="table table-striped table-hover" id="table">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -50,18 +38,22 @@ use Carbon\Carbon;
                                     <td>{{ $reservation->user->firstname }} {{ $reservation->user->surname }}</td>
                                     <td>{{ $reservation->date }}</td>
                                     <td>
-                                        @if (Carbon\Carbon::parse($reservation->date . ' ' . $reservation->end_time) < now())
+                                        @php
+                                            $reservationDateTime = Carbon\Carbon::parse($reservation->date . ' ' . $reservation->end_time);
+                                        @endphp
+
+                                        @if ($reservationDateTime < now())
                                             <span class="badge bg-secondary">Expired</span>
                                         @elseif ($reservation->status == 'payment_required')
-                                            <span class="badge bg-label-success me-1">Approved</span>
+                                            <span class="badge bg-success">Approved</span>
                                         @elseif ($reservation->admin_approval == 'pending')
-                                            <span class="badge bg-label-warning me-1">Pending Admin Approval</span>
+                                            <span class="badge bg-warning">Pending Admin Approval</span>
                                         @elseif ($reservation->admin_approval == 'rejected')
-                                            <span class="badge bg-label-danger me-1">Rejected by Admin</span>
+                                            <span class="badge bg-danger">Rejected by Admin</span>
                                         @elseif ($reservation->dvc_approval == 'pending')
-                                            <span class="badge bg-label-warning me-1">Pending DVC Approval</span>
+                                            <span class="badge bg-warning">Pending DVC Approval</span>
                                         @elseif ($reservation->dvc_approval == 'rejected')
-                                            <span class="badge bg-label-danger me-1">Rejected by DVC</span>
+                                            <span class="badge bg-danger">Rejected by DVC</span>
                                         @endif
                                     </td>
                                     <td>
@@ -73,12 +65,7 @@ use Carbon\Carbon;
                             @endforeach
                         </tbody>
                     </table>
-                        
                 </div>
-                <div class="d-flex justify-content-left">
-                    <h4 class="fw-bold py-3 mb-4"></h4>
-                        {{ $reservations->links('pagination::bootstrap-5') }}
-                    </div>
             </div>
         </div>
 
@@ -99,24 +86,23 @@ use Carbon\Carbon;
                             <p><strong>Date:</strong> {{ $reservation->date }}</p>
                             <p><strong>Time:</strong> {{ $reservation->start_time }} - {{ $reservation->end_time }}</p>
                             <p><strong>Status:</strong>
-                                @if (Carbon\Carbon::parse($reservation->date . ' ' . $reservation->end_time) < now())
-                                    <span class="badge bg-label-secondary me-1">Expired</span>
+                                @if ($reservationDateTime < now())
+                                    <span class="badge bg-secondary">Expired</span>
                                 @elseif ($reservation->status == 'payment_required')
-                                    <span class="badge bg-label-success me-1">Approved</span>
+                                    <span class="badge bg-success">Approved</span>
                                 @elseif ($reservation->admin_approval == 'pending')
-                                    <span class="badge bg-label-warning me-1">Pending Admin Approval</span>
+                                    <span class="badge bg-warning">Pending Admin Approval</span>
                                 @elseif ($reservation->admin_approval == 'rejected')
-                                    <span class="badge bg-label-danger me-1">Rejected by Admin</span>
+                                    <span class="badge bg-danger">Rejected by Admin</span>
                                 @elseif ($reservation->dvc_approval == 'pending')
-                                    <span class="badge bg-label-warning me-1">Pending DVC Approval</span>
+                                    <span class="badge bg-warning">Pending DVC Approval</span>
                                 @elseif ($reservation->dvc_approval == 'rejected')
-                                    <span class="badge bg-label-danger me-1">Rejected by DVC</span>
+                                    <span class="badge bg-danger">Rejected by DVC</span>
                                 @endif
                             </p>
                         </div>
-
                         <div class="modal-footer">
-                                @if (Carbon\Carbon::parse($reservation->date . ' ' . $reservation->end_time) >= now())
+                            @if ($reservationDateTime >= now())
                                 @if ($user->role == 'admin' && $reservation->admin_approval == 'pending')
                                     <form action="{{ route('reservations.approve', $reservation->id) }}" method="POST" style="display:inline-block;">
                                         @csrf
@@ -144,5 +130,4 @@ use Carbon\Carbon;
         @endforeach
     </div>
 </div>
-
 @endsection

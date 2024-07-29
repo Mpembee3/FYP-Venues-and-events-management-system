@@ -25,7 +25,7 @@
             <li class="menu-item {{ Request::is('welcome') ? 'active' : '' }}">
               <a href="{{ url('welcome') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Dashboard</div>
+                <div data-i18n="Analytics">My Dashboard</div>
               </a>
             </li>
 
@@ -33,7 +33,7 @@
             <li class="menu-item {{ Request::is('venue*') ? 'active' : '' }}">
               <a href="{{ url('venue_explorer') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">Venues</div>
+                <div data-i18n="Layouts">Available Venues</div>
               </a>             
             </li>
 
@@ -41,14 +41,14 @@
             <li class="menu-item {{ Request::is('reservations*') ? 'active' : '' }}">
               <a href="{{ url('reservations_user') }}" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Reservation request</div>
+                <div data-i18n="Account Settings">My Reservation requests</div>
               </a>              
             </li>
             <!-- Events(This show events status(ongoing, upcoming))-->
             <li class="menu-item {{ Request::is('events') ? 'active' : '' }}">
               <a href="{{ url('events') }}" class="menu-link ">
                 <i class="menu-icon tf-icons bx bx-table"></i>
-                <div data-i18n="Account Settings">Events</div>
+                <div data-i18n="Account Settings">My Events</div>
               </a>              
             </li>  
 
@@ -58,7 +58,7 @@
               <i class="menu-icon tf-icons bx bx-wallet"></i>
 
 
-                <div data-i18n="Account Settings">Payment</div>
+                <div data-i18n="Account Settings">My Payments</div>
               </a>              
             </li>               
 

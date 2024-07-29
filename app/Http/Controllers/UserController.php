@@ -39,7 +39,7 @@ class UserController extends Controller
             'firstname' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'phone' => 'required|string|phone|max:255|unique:users',
+            'phone' => 'required|string|digits:10|unique:users',
             'role' => 'required|string',
         ]);
 
@@ -47,6 +47,7 @@ class UserController extends Controller
             'firstname' => $request->firstname,
             'surname' => $request->surname,
             'email' => $request->email,
+            'phone' => $request->phone,
             'password' => Hash::make('password'), // Default password, should be changed by the user
             'role' => $request->role,
         ]);
