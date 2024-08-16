@@ -98,7 +98,6 @@ class ReservationController extends Controller
         if ($reservation->date . ' ' . $reservation-> end_time < now() ){
             $reservation->status = 'expired';
             $reservation->admin_approval = ' ';
-            //$reservation->pro_approval = ' ';
             $reservation->dvc_approval = ' ';
         }
         if ($user1->role == 'admin') {
@@ -124,8 +123,6 @@ class ReservationController extends Controller
 
 
         return back()->with('success', 'Reservation approved successfully.');
-        //return redirect()->route('reservations')->with('success', 'Reservation approved successfully.');
-        //return redirect()->route('reservations.approve')->with('success', 'Reservation approved successfully.');
         
     }
 
@@ -147,7 +144,7 @@ class ReservationController extends Controller
         $reservation->save();
 
         return back()->with('error', 'Reservation rejected.');
-        //return redirect()->route('reservations.reject')->with('error', 'Reservation rejected.');
+       
     }
 
 
@@ -155,15 +152,7 @@ class ReservationController extends Controller
     {
         $user = Auth::user();
         $reservations = Reservation::all();
-        
-
-        // $reservations = Reservation::with(['user', 'venue'])
-        // ->when(function ($query) {
-        //     return $query->whereHas('user', function ($query){}
-        //         );
-        // })
-        // ;
-        
+      
     
         return view('reservations.list', compact('reservations', 'user'));
     }    

@@ -30,6 +30,7 @@
                     id="firstname"
                     name="firstname"
                     placeholder="Enter your First name"
+                    value="{{ old('firstname') }}"
                     autofocus
                   />
                   <x-input-error :messages="$errors->get('firstname')" class="mt-2" />
@@ -42,6 +43,7 @@
                     id="surname"
                     name="surname"
                     placeholder="Enter your Surname"
+                    value="{{ old('surname') }}"
                     autofocus
                   />
                   <x-input-error :messages="$errors->get('surname')" class="mt-2" />
@@ -49,13 +51,13 @@
 
                 <div class="mb-3">
                   <label for="email" class="form-label">Email</label>
-                  <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email" />
+                  <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email" value="{{ old('email') }}" />
                   <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
 
                 <div class="mb-3">
                   <label for="phone" class="form-label">Phone</label>
-                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter your phone" />
+                  <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter your phone" value="{{ old('phone') }}"/>
                   <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                 </div>
 

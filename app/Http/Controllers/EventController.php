@@ -66,18 +66,6 @@ class EventController extends Controller
 
         return view('events.index', compact('events'));
     }
-
-        //     $events = Event::all();
-        //     // with(['payment.reservation.venue', 'payment.reservation.user'])->get();
-    
-        //         return view('events.index', compact('events'));
-        // }
-    // $user = Auth::user();
-    // $events = Event::with('payment.reservation.venue')->get();
-
-    // return view('events.index', compact('events', 'user'));
-
-    //  }
     
     }
 

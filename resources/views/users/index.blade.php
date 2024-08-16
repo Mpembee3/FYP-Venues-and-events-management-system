@@ -10,6 +10,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         
         <div class="card">            
             <div class="card-body">
@@ -103,7 +110,7 @@
 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ route('admin.users.store') }}" method="POST">
+            <form id="formAuthentication" action="{{ route('admin.users.store') }}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
@@ -112,19 +119,23 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="firstname" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="firstname" name="firstname" required>
+                        <input type="text" class="form-control" id="firstname" name="firstname" value="{{ old('firstname') }}" required>
+                        <x-input-error :messages="$errors->get('firstname')" class="mt-2" />
                     </div>
                     <div class="mb-3">
                         <label for="surname" class="form-label">Surname</label>
-                        <input type="text" class="form-control" id="surname" name="surname" required>
+                        <input type="text" class="form-control" id="surname" name="surname" value="{{ old('surname') }}" required>
+                        <x-input-error :messages="$errors->get('surname')" class="mt-2" />
                     </div>
                     <div class="mb-3">
                         <label for="phone" class="form-label">Phone</label>
-                        <input type="phone" class="form-control" id="phone" name="phone" required>
+                        <input type="phone" class="form-control" id="phone" name="phone" value="{{ old('phone') }}"required>
+                        <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
+                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
                     <div class="mb-3">
                         <label for="role" class="form-label">Role</label>

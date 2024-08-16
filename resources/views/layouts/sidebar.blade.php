@@ -66,32 +66,9 @@
               <i class="menu-icon tf-icons bx bx-wallet"></i>          
                 <div data-i18n="Account Settings">Users</div>
               </a>              
-            </li>     
+            </li>              
             
-            
 
-
-
-
-
-            <!-- Other stuffs can be added here -->
-            <!-- <li class="menu-item">
-              <a href=" " class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-                <div data-i18n="Misc">Misc</div>
-              </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href=" " class="menu-link">
-                    <div data-i18n=" "></div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href=" " class="menu-link">
-                    <div data-i18n=" "></div>
-                  </a>
-                </li>
-              </ul>-->
             </li>       
           
            
@@ -121,10 +98,17 @@
                   <!-- dark mode will be implemented here -->
                            <li class="nav-item">
                             <a class="nav-link" href="javascript:void(0);" id="dark-mode-toggle">
-                              <i class="bx bx-moon"></i>
+                              <i class="bx bx-moon bx-sm"></i>
                             </a>
                           </li>
                   <!-- dark mode will be implemented here -->
+                   <!-- notifications will be implemented here -->
+                  <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0);" id="">
+                              <i class="bx bx-bell bx-sm"></i>
+                            </a>
+                  </li>
+                  <!-- notifications will be implemented here -->
 
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">

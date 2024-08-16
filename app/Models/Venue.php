@@ -24,16 +24,6 @@ class Venue extends Model
 }
 
 
-//     public function isAvailable($date)
-// {
-//     // Check if there are any reservations for the venue on the given date
-//     return $this->reservations()->where('date', $date)->count() == 0;
-// }
-
-    // public function getEventListAttribute()
-    // {
-    //     return json_decode($this->event, true);
-    // }
 
     public function isAvailable($date, $start_time, $end_time)
     {

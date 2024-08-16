@@ -6,9 +6,18 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
+use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules;
+use Illuminate\View\View;
+
+
 class UserController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         $users = User::all();
         return view('users.index', compact('users'));
@@ -33,17 +42,22 @@ class UserController extends Controller
     }
 
 
-    public function store(Request $request)
+        /**
+     * Handle an incoming registration request by admins.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'firstname' => 'required|string|max:255',
-            'surname' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'phone' => 'required|string|digits:10|unique:users',
-            'role' => 'required|string',
+            'firstname' => ['required', 'string', 'max:255'],
+            'surname' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'phone' => ['required','string','digits:10','unique:'.User::class],
+            'role' => ['required', 'string'],
         ]);
 
-        User::create([
+        $user = User::create([
             'firstname' => $request->firstname,
             'surname' => $request->surname,
             'email' => $request->email,
@@ -52,7 +66,10 @@ class UserController extends Controller
             'role' => $request->role,
         ]);
 
-        return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
+
+        //return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
+       
+
     }
 }
 

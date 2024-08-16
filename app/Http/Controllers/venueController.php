@@ -154,24 +154,6 @@ class venueController extends Controller
 
        // Method to check venue availability
         
-
-
-
-    //    public function checkAvailability(Request $request, $id)
-    //    {
-    //        $venue = Venue::findOrFail($id);
-    //        $date = request()->query('date');
-    //        $start_time = $request->input('start_time');
-    //        $end_time = $request->input('end_time');
-       
-    //        if (!$venue->isAvailable($date, $start_time, $end_time)) {
-    //         $availabilityMessage = 'Venue is not available for the selected date and time.';
-    //         return view('venues.venue_view', compact('venue', 'availabilityMessage', 'date', 'start_time', 'end_time'));
-    //     }
-    
-    //     $availabilityMessage = 'Venue is available for the selected date and time.';
-    //     return view('venues.venue_view', compact('venue', 'availabilityMessage', 'date', 'start_time', 'end_time'));
-    // }
     public function checkAvailability(Request $request, $id)
     {
         $venue = Venue::findOrFail($id);

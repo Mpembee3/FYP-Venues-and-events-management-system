@@ -18,23 +18,35 @@ class DashboardController extends Controller
 
         // Basic data
         $totalReservations = Reservation::count();
-        $newReservations = Reservation::where('created_at', '>', now()->subDay())->count();
+        //$newReservations = Reservation::where('created_at', '>', now()->subDay())->count();
+        $newReservations = Reservation::where('created_at', '>', now()->subDay())
+            ->where('admin_approval', 'pending')
+            ->orWhere(function ($query) {
+                $query->where('dvc_approval', 'pending')
+                    ->where('admin_approval', 'approved');
+            })
+            ->count();
+
+
+
         $registeredVenues = Venue::count();
         $ongoingEvents = Event::where('status', 'ongoing')->count();
         $upcomingEvents = Event::where('status', 'upcoming')->count();
         $registeredUsers = User::where('role', 'user')->count();
         // $totalRevenue = Reservation::sum('amount'); // Assuming there's an 'amount' field in reservations
-        $totalRevenue = Event::with(['payment.reservation'])
-            ->get()
-            ->sum(function ($totalRevenue) {
-                $price = $totalRevenue->payment->reservation->venue->Price;
-                $totalRevenue->price;
-                $totalRevenue->save();
-
-            });
+        $totalRevenue = Event::whereHas('payment', function($query) {
+        $query->where('pro_approval', 'confirmed'); // Assuming 'status' is the field that marks payment confirmation
+        })
+        ->with(['payment.reservation.venue'])
+        ->get()
+        ->sum(function ($event) {
+            return $event->payment->reservation->venue->Price;
+        });
 
         $pendingPayments = Payment::where('payment_status', 'pending')->count();
-        $newPayments = Reservation::where('created_at', '>', now()->subDay())->count();
+        //$newPayments = Reservation::where('created_at', '>', now()->subDay())->count();
+                $newPayments = Payment::where('created_at', '>', now()->subDay())
+            ->where('pro_approval', 'pending')->count();
 
 
         // Pending approvals based on user role
@@ -82,7 +94,16 @@ class DashboardController extends Controller
         $upcomingEvents = $userEvents->where('status', 'upcoming')->count();
         //$registeredUsers = User::where('role', 'user')->count();
         // $totalRevenue = Reservation::sum('amount'); // Assuming there's an 'amount' field in reservations
-        
+            $totalPayments = Event::whereHas('payment.reservation', function ($query) use ($user){
+            $query->where('user_id', $user->id) // Ensure you filter by the current user's events
+                    ->where('pro_approval', 'confirmed'); // Assuming 'pro_approval' is the field for payment confirmation
+        })        
+        ->with(['payment.reservation.venue'])
+        ->get()
+        ->sum(function ($event) {
+            return $event->payment->reservation->venue->Price;
+        });
+            
         $pendingPayments = Payment::where('payment_status', 'pending')
                 ->whereHas('reservation', function($query) use ($user) {
                     $query->where('user_id', $user->id);
@@ -106,7 +127,7 @@ class DashboardController extends Controller
             return view('welcome', compact(
             'totalReservations', 'registeredVenues',
             'paymentApprovals',
-            'ongoingEvents',
+            'ongoingEvents','totalPayments',
             'upcomingEvents',
             'pendingApprovals', 'pendingPayments',
         ));

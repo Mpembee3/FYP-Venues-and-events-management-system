@@ -4,7 +4,6 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\venueController;
-//use App\Http\Controllers\reservationController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PaymentRequestController;
@@ -25,9 +24,9 @@ use Illuminate\Support\Facades\Route;
 */
 
     //...........login and registration starts.........
-    Route::get('/welcome', [DashboardController::class, 'user'])->name('welcome')->middleware(['auth', 'verified']);
+    Route::get('/welcome', [DashboardController::class, 'user'])->name('welcome')->middleware(['auth', 'verified', 'role:user']);
   
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['auth', 'verified']);
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['auth', 'verified', 'role:admin,PRO,DVC']);
        
   
     Route::get('/reserve', function () {
@@ -39,17 +38,12 @@ use Illuminate\Support\Facades\Route;
 //.................USERS MANAGEMENT MODULE ROUTES STARTS HERE................ 
 
 
-Route::middleware(['auth', 'role:PRO'])->group(function () {
+Route::middleware(['auth', 'role:PRO,DVC,admin'])->group(function () {
     Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index');    
     Route::post('/admin/users', [UserController::class, 'store'])->name('admin.users.store');
     Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
     Route::patch('/admin/users/{user}/role', [UserController::class, 'updateRole'])->name('admin.users.updateRole');
 });
-
-
-
-
-
 
 
 //................USERS MANAGEMENT ROUTES ENDS HERE................
@@ -65,9 +59,6 @@ Route::get('/see_venue_register', function () {
     return view('venues.venue_register');
 });
 
-// Route::get('/see_payments', function () {
-//     return view('payments');
-// });
 
 Route::get('/see_venue_edit/{id}', [venueController::class, 'edit'])->name('see_venue_edit');
 Route::put('/see_venue_update/{id}', [venueController::class, 'update'])->name('see_venue_update');
@@ -124,10 +115,6 @@ Route::get('/events', [EventController::class, 'index'])->name('events.index');
 
 
 Route::middleware(['auth'])->group(function () {
-    //Route::get('/payment-requests', [PaymentRequestController::class, 'index'])->name('payment-requests.index');
-    //Route::post('/payment-requests', [PaymentRequestController::class, 'store'])->name('payment-requests.store');
-    
-    //Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
     Route::post('/payments/confirm/{id}', [PaymentController::class, 'confirmPayment'])->name('payment.confirm');
     Route::get('/see_payments', [PaymentController::class, 'index'])->name('payments.index');
     
@@ -148,31 +135,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 });
-
-// The route that the button calls to initialize payment
-//Route::post('/pay', [FlutterwaveController::class, 'initialize'])->name('pay');
-// The callback url after a payment
-//Route::get('/rave/callback', [FlutterwaveController::class, 'callback'])->name('callback');
-
-// Route::get('/flutterwave', function () {
-//     return view('flutterwave');
-// });
-// use App\Http\Controllers\FlutterwaveController;
-
-// Route::get('/payment', [FlutterwaveController::class, 'showPaymentForm'])->name('flutterwave.paymentForm');
-// Route::post('/payment/initialize', [FlutterwaveController::class, 'initializePayment'])->name('flutterwave.initialize');
-// Route::get('/payment/callback', [FlutterwaveController::class, 'handleCallback'])->name('flutterwave.callback');
-
-
-
-// The page that displays the payment form
-// Route::get('/', function () {
-//     return view('flutterwave');
-// });
-// // The route that the button calls to initialize payment
-// Route::post('/pay', [FlutterwaveController::class, 'initialize'])->name('pay');
-// // The callback url after a payment
-// Route::get('/rave/callback', [FlutterwaveController::class, 'callback'])->name('callback');
 
 
 require __DIR__.'/auth.php';
