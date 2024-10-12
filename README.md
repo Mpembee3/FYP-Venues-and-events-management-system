@@ -25,11 +25,11 @@ A web-based platform for managing the reservation and approval of venues for eve
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/campus-reservation-system.git
+    git clone https://github.com/Mpembee3/FYP-Venues-and-events-management-system.git
     ```
 2. Navigate to the project directory:
     ```bash
-    cd campus-reservation-system
+    cd FYP-Venues-and-events-management-system
     ```
 3. Install dependencies:
     ```bash
